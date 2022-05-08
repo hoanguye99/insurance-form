@@ -5,7 +5,7 @@ import { store } from './app/store'
 import App from './App'
 import 'styles/global.scss'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { MainLayout } from 'components/layout'
+import { MainLayout, EmptyLayout } from 'components/layout'
 import { Home } from 'components/home'
 import About from 'components/about'
 
@@ -17,9 +17,19 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route path="about" element={<About />} />
+          <Route path="/" element={<EmptyLayout />}>
+            <Route path="about" element={<MainLayout />}>
+              <Route index element={<About />} />
+            </Route>
             <Route index element={<Home />} />
+            <Route
+              path="*"
+              element={
+                <main >
+                  <p>404! Nothing is found</p>
+                </main>
+              }
+            />
           </Route>
         </Routes>
       </BrowserRouter>
