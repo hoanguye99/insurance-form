@@ -1,17 +1,16 @@
 import { useAppSelector } from 'app/hooks'
 import React, { useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import styles from 'styles/home/Home.module.scss'
 import logo from 'utils/assets/images/FPT_logo_2010.svg.png'
 import { selectLoggedIn } from 'utils/slice'
 import LogInForm from './log-in-form'
 
-export const Home = () => {
+export const Login = () => {
   const loggedIn = useAppSelector(selectLoggedIn);
   let navigate = useNavigate();
   useEffect(() => {
     if (loggedIn) {
-      navigate('about')
+      navigate('submit')
     }
   }, [loggedIn, navigate])
   return (

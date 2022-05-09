@@ -1,5 +1,5 @@
 import { useAppDispatch } from 'app/hooks'
-import { Button, Input } from 'components/styled'
+import { Button, Input, Label } from 'components/styled'
 import React from 'react'
 import { logIn } from 'utils/slice'
 
@@ -13,9 +13,9 @@ const LogInForm = () => {
   return (
     <form onSubmit={handleFormSubmit}>
       <div>
-        <label htmlFor="email" className="block mb-2 text-sm text-gray-600">
+        <Label htmlFor="email">
           Account Mail FPT
-        </label>
+        </Label>
         <Input
           type="text"
           name="email"
@@ -25,11 +25,9 @@ const LogInForm = () => {
       </div>
 
       <div className="mt-6">
-        <div className="flex justify-between mb-2">
-          <label htmlFor="password" className="text-sm text-gray-600">
-            Mật khẩu
-          </label>
-        </div>
+        <Label htmlFor="password">
+          Mật khẩu
+        </Label>
 
         <Input
           type="password"
@@ -40,9 +38,7 @@ const LogInForm = () => {
       </div>
 
       <div className="mt-6">
-        <Button>
-          Đăng nhập
-        </Button>
+        <Button>Đăng nhập</Button>
       </div>
     </form>
   )

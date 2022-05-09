@@ -7,19 +7,29 @@ import { logOut } from 'utils/slice'
 
 export const MainLayout = () => {
   const dispatch = useAppDispatch()
-  let navigate = useNavigate();
+  let navigate = useNavigate()
   function handleLogoutButton() {
     dispatch(logOut())
     navigate('/')
   }
+  function handleAboutButton() {
+    navigate('/about')
+  }
   return (
-    <div className="bg-gray-500">
-      <nav className="container mx-auto py-4 flex items-center justify-between ">
-        <Link className="flex items-center gap-1" to="/about">
+    <div className="bg-[#f3f4f6]">
+      <nav className="container mx-auto py-5 flex items-center justify-between border-b">
+        <Link className="flex items-center gap-1" to="/submit">
           <img src={logo} alt="" className="w-12" />
-          <p className='font-["Muli-ExtraBold"] text-white text-xl'>BH</p>
+          <p className='font-["Muli-ExtraBold"] text-blue-500 text-xl'>BH</p>
         </Link>
-        <Button onClick={handleLogoutButton} className='w-fit'>Đăng xuất</Button>
+        <div className='flex gap-3'>
+          <Button onClick={handleAboutButton} className="w-fit">
+            Biểu phí
+          </Button>
+          <Button onClick={handleLogoutButton} className="w-fit !bg-[#f3f4f6] hover:!text-white hover:!bg-blue-500 border border-blue-500 text-blue-500">
+            Đăng xuất
+          </Button>
+        </div>
       </nav>
       <Outlet />
     </div>

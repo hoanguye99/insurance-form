@@ -6,7 +6,8 @@ import App from './App'
 import 'styles/global.scss'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { MainLayout, EmptyLayout } from 'components/layout'
-import { Home } from 'components/home'
+import { Login } from 'components/log-in'
+import Submit from 'components/submit'
 import About from 'components/about'
 
 const container = document.getElementById('root')!
@@ -21,7 +22,10 @@ root.render(
             <Route path="about" element={<MainLayout />}>
               <Route index element={<About />} />
             </Route>
-            <Route index element={<Home />} />
+            <Route path="submit" element={<MainLayout />}>
+              <Route index element={<Submit />} />
+            </Route>
+            <Route index element={<Login />} />
             <Route
               path="*"
               element={
