@@ -38,7 +38,7 @@ const LogInForm = () => {
       </div>
 
       <div className="mt-6">
-        <Button>Đăng nhập</Button>
+        <Button className="w-full">Đăng nhập</Button>
       </div>
     </form>
   )
