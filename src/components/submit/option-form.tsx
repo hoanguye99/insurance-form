@@ -20,7 +20,7 @@ const OptionForm = () => {
         </div>
 
         <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-          <Button className="w-fit">Send</Button>
+          <Button className="w-fit">Gửi</Button>
         </div>
       </div>
     </form>

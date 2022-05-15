@@ -16,7 +16,7 @@ export const MainLayout = () => {
     navigate('/about')
   }
   return (
-    <div className="bg-[#f3f4f6]">
+    <div className="bg-[#f3f4f6] flex flex-col min-h-screen">
       <nav className="container mx-auto py-5 flex items-center justify-between border-b">
         <Link className="flex items-center gap-1" to="/submit">
           <img src={logo} alt="" className="w-12" />
@@ -26,7 +26,7 @@ export const MainLayout = () => {
           <Button onClick={handleAboutButton} className="w-fit">
             Biểu phí
           </Button>
-          <Button onClick={handleLogoutButton} className="w-fit !bg-[#f3f4f6] hover:!text-white hover:!bg-blue-500 border border-blue-500 text-blue-500">
+          <Button onClick={handleLogoutButton} className="w-fit !bg-[#f3f4f6] hover:!text-white hover:!bg-blue-500 border border-blue-500 !text-blue-500">
             Đăng xuất
           </Button>
         </div>
