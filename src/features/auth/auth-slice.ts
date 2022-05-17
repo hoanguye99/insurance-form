@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
-import { AuthState, LogInType } from "models/slice";
+import { AuthState, LoginType } from "models/features";
 
 const initialState: AuthState = {
   loggedIn: false,
@@ -11,12 +11,12 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logIn: handleLogInAction,
-    logOut: handleLogOutAction,
+    login: handleLoginAction,
+    logout: handleLogoutAction,
   }
 })
 
-function handleLogInAction(state : AuthState, action: PayloadAction<LogInType>) {
+function handleLoginAction(state : AuthState, action: PayloadAction<LoginType>) {
   const {username, password} = action.payload
   if (username === 'hoang' && password === 'hoang123') {
     return {
@@ -27,11 +27,11 @@ function handleLogInAction(state : AuthState, action: PayloadAction<LogInType>) 
   return {...state}
 }
 
-function handleLogOutAction(state : AuthState) {
+function handleLogoutAction(state : AuthState) {
   return initialState
 }
 
-export const {logIn, logOut} = authSlice.actions
+export const {login, logout} = authSlice.actions
 
 export const selectLoggedIn = (state: RootState) => state.auth.loggedIn
 

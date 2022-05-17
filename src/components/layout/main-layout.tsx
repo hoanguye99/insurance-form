@@ -1,15 +1,15 @@
 import { useAppDispatch } from 'app/hooks'
 import { Button } from 'components/styled'
+import { logout } from 'features/auth/auth-slice'
 import React from 'react'
 import { Outlet, Link, useNavigate } from 'react-router-dom'
 import logo from 'utils/assets/images/FPT_logo_2010.svg.png'
-import { logOut } from 'utils/slice'
 
 export const MainLayout = () => {
   const dispatch = useAppDispatch()
   let navigate = useNavigate()
   function handleLogoutButton() {
-    dispatch(logOut())
+    dispatch(logout())
     navigate('/')
   }
   function handleAboutButton() {

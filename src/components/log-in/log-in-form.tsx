@@ -1,10 +1,10 @@
 import loginApi from 'api/login-api'
 import { useAppDispatch } from 'app/hooks'
 import { Button, Input, Label } from 'components/styled'
+import { login } from 'features/auth/auth-slice'
 import React from 'react'
-import { logIn } from 'utils/slice'
 
-const LogInForm = () => {
+const LoginForm = () => {
   const dispatch = useAppDispatch()
   const handleFormSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
@@ -14,7 +14,7 @@ const LogInForm = () => {
     //     dispatch(logIn({ username: 'hoang', password: 'hoang123' }))
     //   })
     //   .catch((err) => console.log(err))
-    dispatch(logIn({ username: 'hoang', password: 'hoang123' }))
+    dispatch(login({ username: 'hoang', password: 'hoang123' }))
   }
 
   return (
@@ -47,4 +47,4 @@ const LogInForm = () => {
   )
 }
 
-export default LogInForm
+export default LoginForm

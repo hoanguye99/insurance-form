@@ -3,7 +3,7 @@ export interface AuthState {
   user: string
 }
 
-export interface LogInType {
+export interface LoginType {
   username: string
   password: string
 }

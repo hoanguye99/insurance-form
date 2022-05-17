@@ -1,9 +1,9 @@
 import { useAppSelector } from 'app/hooks'
+import { selectLoggedIn } from 'features/auth/auth-slice'
 import React, { useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from 'utils/assets/images/FPT_logo_2010.svg.png'
-import { selectLoggedIn } from 'utils/slice'
-import LogInForm from './log-in-form'
+import LoginForm from './log-in-form'
 
 export const Login = () => {
   const loggedIn = useAppSelector(selectLoggedIn);
@@ -45,7 +45,7 @@ export const Login = () => {
             </div>
 
             <div className="mt-8">
-              <LogInForm />
+              <LoginForm />
             </div>
           </div>
         </div>
