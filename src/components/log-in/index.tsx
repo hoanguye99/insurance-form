@@ -1,18 +1,28 @@
 import { useAppSelector } from 'app/hooks'
-import { selectLoggedIn } from 'features/auth/auth-slice'
-import React, { useCallback, useEffect } from 'react'
+import { selectUserDetail } from 'features/auth/user-login-slice'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from 'utils/assets/images/FPT_logo_2010.svg.png'
 import LoginForm from './log-in-form'
 
 export const Login = () => {
-  const loggedIn = useAppSelector(selectLoggedIn);
-  let navigate = useNavigate();
+  const userDetail = useAppSelector(selectUserDetail)
+  let navigate = useNavigate()
+
   useEffect(() => {
-    if (loggedIn) {
-      navigate('submit')
+    switch (userDetail.role) {
+      case 'USER':
+        navigate('submit')
+        break
+      case 'ADMIN':
+        navigate('admin')
+        break
+      case 'ANONYMOUS':
+        navigate('/')
+        break
     }
-  }, [loggedIn, navigate])
+  }, [navigate, userDetail])
+
   return (
     <div className="bg-white">
       <div className="flex justify-center h-screen">

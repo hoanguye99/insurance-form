@@ -1,10 +1,16 @@
 export interface LoginResponse {
-  errorCode: string
-  errorMessage: string
+  accessToken: string
+  displayName: string
+  role: "USER" | "ADMIN"
 }
 
+export interface LoginError {
+  code: number
+  error: string
+  description: string
+}
 
 export interface LoginRequest {
-  username: string
+  userName: string
   password: string
 }

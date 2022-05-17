@@ -1,58 +1,81 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { useAppSelector } from 'app/hooks'
+import {
+  selectLoggedIn,
+  selectUserDetail,
+} from 'features/auth/user-login-slice'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { MainLayout, EmptyLayout } from 'components/layout'
+import { Login } from 'components/log-in'
+import Submit from 'components/submit'
+import About from 'components/about'
+import Manage from 'components/manage'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  );
+  const userDetail = useAppSelector(selectUserDetail)
+
+  let routes
+  switch (userDetail.role) {
+    case 'USER':
+      routes = (
+        <Routes>
+          <Route path="/" element={<EmptyLayout />}>
+            <Route path="about" element={<MainLayout />}>
+              <Route index element={<About />} />
+            </Route>
+            <Route path="submit" element={<MainLayout />}>
+              <Route index element={<Submit />} />
+            </Route>
+            <Route index element={<Login />} />
+            <Route
+              path="*"
+              element={
+                <main>
+                  <p>404! Nothing is found</p>
+                </main>
+              }
+            />
+          </Route>
+        </Routes>
+      )
+      break
+    case 'ADMIN':
+      routes = (
+        <Routes>
+          <Route path="/" element={<EmptyLayout />}>
+            <Route path="admin" element={<MainLayout />}>
+              <Route index element={<Manage />} />
+            </Route>
+            <Route index element={<Login />} />
+            <Route
+              path="*"
+              element={
+                <main>
+                  <p>404! Nothing is found</p>
+                </main>
+              }
+            />
+          </Route>
+        </Routes>
+      )
+      break
+    case 'ANONYMOUS':
+      routes = (
+        <Routes>
+          <Route path="/" element={<EmptyLayout />}>
+            <Route index element={<Login />} />
+            <Route
+              path="*"
+              element={
+                <Navigate to="/" replace={true} />
+              }
+            />
+          </Route>
+        </Routes>
+      )
+      break
+  }
+
+  return <BrowserRouter>{routes}</BrowserRouter>
 }
 
-export default App;
+export default App

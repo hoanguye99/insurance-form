@@ -1,12 +1,12 @@
 import loginApi from 'api/login-api'
 import { useAppDispatch } from 'app/hooks'
 import { Button, Input, Label } from 'components/styled'
-import { login } from 'features/auth/auth-slice'
+import { loginAsync } from 'features/auth/user-login-slice'
 import React from 'react'
 
 const LoginForm = () => {
   const dispatch = useAppDispatch()
-  const handleFormSubmit = (e: React.SyntheticEvent) => {
+  const handleFormSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     // loginApi
     //   .add({ username: 'hoangnd25@fpt.com.vn', password: 'ArianaGrande2' })
@@ -14,7 +14,8 @@ const LoginForm = () => {
     //     dispatch(logIn({ username: 'hoang', password: 'hoang123' }))
     //   })
     //   .catch((err) => console.log(err))
-    dispatch(login({ username: 'hoang', password: 'hoang123' }))
+    await dispatch(loginAsync({ username: 'hoangnd', password: '123456' }))
+    
   }
 
   return (

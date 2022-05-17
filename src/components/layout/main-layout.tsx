@@ -1,6 +1,6 @@
 import { useAppDispatch } from 'app/hooks'
 import { Button } from 'components/styled'
-import { logout } from 'features/auth/auth-slice'
+import { logout } from 'features/auth/user-login-slice'
 import React from 'react'
 import { Outlet, Link, useNavigate } from 'react-router-dom'
 import logo from 'utils/assets/images/FPT_logo_2010.svg.png'
