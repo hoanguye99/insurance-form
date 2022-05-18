@@ -7,7 +7,7 @@ export interface LoginState {
   failureDescription: string
 }
 
-interface UserDetail extends Omit<LoginResponse, 'role'> {
+export interface UserDetail extends Omit<LoginResponse, 'role'> {
   role: 'USER' | 'ADMIN' | 'ANONYMOUS'
 }
 

@@ -1,9 +1,22 @@
+import { useAppSelector } from 'app/hooks'
 import { Button, Input, Label } from 'components/styled'
+import { selectProductList } from 'features/product/product-list-slice'
+import { GetAllProductTypeResponse, ProductType } from 'models/api'
+import styles from 'styles/component/submit/option-form.module.scss'
 import React from 'react'
+import { UseFormRegister } from 'react-hook-form'
+import { CreateOrderFormData } from 'models/api/order-api'
 
-const OptionForm = () => {
+interface OptionFormProps {
+  register: UseFormRegister<CreateOrderFormData>
+}
+
+const OptionForm = (props: OptionFormProps) => {
+  const productList = useAppSelector(
+    selectProductList
+  ) as GetAllProductTypeResponse
   return (
-    <form action="#" method="POST">
+    productList.insTypes && (
       <div className="shadow overflow-hidden sm:rounded-md">
         <div className="px-4 py-5 bg-white sm:p-6">
           <legend className="text-base font-medium text-gray-900">
@@ -11,11 +24,9 @@ const OptionForm = () => {
           </legend>
 
           <div className="mt-4 flex flex-col">
-            <OptionMotorbike />
-
-            <OptionSmallCar />
-
-            <OptionBigCar />
+            {productList.insTypes.map((item) => (
+              <Option key={item.id} {...item} register={props.register} />
+            ))}
           </div>
         </div>
 
@@ -23,95 +34,36 @@ const OptionForm = () => {
           <Button className="w-fit">Gửi</Button>
         </div>
       </div>
-    </form>
+    )
   )
 }
 
-const OptionMotorbike = () => {
+interface OptionProps extends ProductType {
+  register: UseFormRegister<CreateOrderFormData>
+}
+
+const Option = (props: OptionProps) => {
   return (
     <label
-      htmlFor="motorbike"
+      htmlFor={props.code}
       className="flex hover:bg-gray-50 py-5 px-2 rounded-lg cursor-pointer"
     >
       <div className="flex items-center h-5">
         <input
-          id="motorbike"
-          name="insurance-option"
+          id={props.code}
+          // name="insurance-option"
           type="radio"
+          {...props.register('typeCode', { required:true })}
+          value={props.code}
           className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
         />
       </div>
       <div className="ml-3 text-sm">
-        <div className="font-medium text-gray-700">Xe máy</div>
-        <p className="text-gray-500">
-          Bảo hiểm bắt buộc (TNDS) đền bù trách nhiệm của chủ xe đối với bên thứ
-          ba:{' '}
-          <span className="font-['Muli-ExtraBold'] text-gray-800">30.000đ</span>
-        </p>
-        <p className="text-gray-500">
-          Bảo hiểm tai nạn người ngồi trên xe (TNLP- không bắt buộc):{' '}
-          <span className="font-['Muli-ExtraBold'] text-gray-800">10.000đ</span>
-        </p>
-      </div>
-    </label>
-  )
-}
-
-const OptionSmallCar = () => {
-  return (
-    <label
-      htmlFor="small-car"
-      className="flex hover:bg-gray-50 py-5 px-2 rounded-lg cursor-pointer"
-    >
-      <div className="flex items-center h-5">
-        <input
-          id="small-car"
-          name="insurance-option"
-          type="radio"
-          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-        />
-      </div>
-      <div className="ml-3 text-sm">
-        <div className="font-medium text-gray-700">Ô tô nhỏ hơn 6 chỗ </div>
-        <p className="text-gray-500">
-          Bảo hiểm bắt buộc (TNDS) đền bù trách nhiệm của chủ xe đối với bên thứ
-          ba:{' '}
-          <span className="font-['Muli-ExtraBold'] text-gray-800">370.000đ</span>
-        </p>
-        <p className="text-gray-500">
-          Bảo hiểm tai nạn người ngồi trên xe (TNLP- không bắt buộc):{' '}
-          <span className="font-['Muli-ExtraBold'] text-gray-800">30.000đ</span>
-        </p>
-      </div>
-    </label>
-  )
-}
-
-const OptionBigCar = () => {
-  return (
-    <label
-      htmlFor="big-car"
-      className="flex hover:bg-gray-50 py-5 px-2 rounded-lg cursor-pointer"
-    >
-      <div className="flex items-center h-5">
-        <input
-          id="big-car"
-          name="insurance-option"
-          type="radio"
-          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-        />
-      </div>
-      <div className="ml-3 text-sm">
-      <div className="font-medium text-gray-700">Ô tô từ 7 đến 11 chỗ </div>
-        <p className="text-gray-500">
-          Bảo hiểm bắt buộc (TNDS) đền bù trách nhiệm của chủ xe đối với bên thứ
-          ba:{' '}
-          <span className="font-['Muli-ExtraBold'] text-gray-800">675.000đ</span>
-        </p>
-        <p className="text-gray-500">
-          Bảo hiểm tai nạn người ngồi trên xe (TNLP- không bắt buộc):{' '}
-          <span className="font-['Muli-ExtraBold'] text-gray-800">52.000đ</span>
-        </p>
+        <div className="font-medium text-gray-700">{props.name}</div>
+        <div
+          className={styles.tempContainer}
+          dangerouslySetInnerHTML={{ __html: props.description }}
+        ></div>
       </div>
     </label>
   )

@@ -1,46 +1,58 @@
 import loginApi from 'api/login-api'
-import { useAppDispatch } from 'app/hooks'
+import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { Button, Input, Label } from 'components/styled'
-import { loginAsync } from 'features/auth/user-login-slice'
+import { loginAsync, selectFailureDescription } from 'features/auth/user-login-slice'
+import { useForm, SubmitHandler } from "react-hook-form";
 import React from 'react'
 
+export type LoginFormData = {
+  username: string;
+  password: string;
+};
+
 const LoginForm = () => {
+  const failureDescription = useAppSelector(selectFailureDescription)
   const dispatch = useAppDispatch()
-  const handleFormSubmit = async (e: React.SyntheticEvent) => {
-    e.preventDefault()
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>();
+  const handleFormSubmit: SubmitHandler<LoginFormData> = async (data) => {
     // loginApi
     //   .add({ username: 'hoangnd25@fpt.com.vn', password: 'ArianaGrande2' })
     //   .then((res) => {
     //     dispatch(logIn({ username: 'hoang', password: 'hoang123' }))
     //   })
     //   .catch((err) => console.log(err))
-    await dispatch(loginAsync({ username: 'hoangnd', password: '123456' }))
-    
+    await dispatch(loginAsync(data))
   }
 
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form onSubmit={handleSubmit(handleFormSubmit)}>
       <div>
         <Label htmlFor="email">Account Mail FPT</Label>
-        <Input
+        <Input<LoginFormData>
           type="text"
           name="email"
           id="email"
           placeholder="example@fpt.com.vn"
+          register={register}
+          label="username"
+          required={true}
         />
       </div>
 
       <div className="mt-6">
         <Label htmlFor="password">Mật khẩu</Label>
 
-        <Input
+        <Input<LoginFormData>
           type="password"
           name="password"
           id="password"
           placeholder="Mật khẩu"
+          register={register}
+          label="password"
+          required={true}
         />
       </div>
-
+      {failureDescription && failureDescription != '' && <p className='mt-3 -mb-3 italic text-red-500 text-sm'>{failureDescription}</p>}
       <div className="mt-6">
         <Button className="w-full">Đăng nhập</Button>
       </div>

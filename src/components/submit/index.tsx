@@ -1,44 +1,75 @@
+import { useAppDispatch, useAppSelector } from 'app/hooks'
 import FormHeader from 'components/common/form-header'
-import React from 'react'
+import {
+  getAllProductTypesAsync,
+  selectProductList,
+} from 'features/product/product-list-slice'
+import React, { useEffect } from 'react'
 import OptionForm from './option-form'
 import VehicleInfoForm from './vehicle-info-form'
 import VehicleOwnerForm from './vehicle-owner-form'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { CreateOrderFormData } from 'models/api/order-api'
+import { selectUserDetail } from 'features/auth/user-login-slice'
+import orderApi from 'api/order-api'
 
 const Submit = () => {
+  const productList = useAppSelector(selectProductList)
+  const userDetail = useAppSelector(selectUserDetail)
+  const dispatch = useAppDispatch()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateOrderFormData>()
+  useEffect(() => {
+    if (Object.keys(productList).length === 0) {
+      dispatch(getAllProductTypesAsync())
+    }
+  }, [productList])
+  const handleFormSubmit: SubmitHandler<CreateOrderFormData> = async (data) => {
+    data.startDate = data.startDate.split("-").join('')
+    data.endDate = data.endDate.split("-").join('')
+    try {
+      const res = orderApi.createInsuranceOrder(data, userDetail)
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="bg-[#f3f4f6]">
       <div className=" container mx-auto sm:pt-10 pb-10">
-        <Section
-          header={<FormHeader header="Thông tin xe và chủ xe" extra="" />}
-        >
-          <VehicleOwnerForm />
-        </Section>
+        <form onSubmit={handleSubmit(handleFormSubmit)}>
+          <Section
+            header={<FormHeader header="Thông tin xe và chủ xe" extra="" />}
+          >
+            <VehicleOwnerForm register={register} />
+          </Section>
 
-        <Separator />
+          <Separator />
 
-        <Section
-          header={
-            <FormHeader
-              header="Thời hạn hiệu lực của giấy CNBH"
-              extra="(365 ngày bao gồm cả ngày bắt đầu và ngày kết thúc)"
-            />
-          }
-        >
-          <VehicleInfoForm />
-        </Section>
+          <Section
+            header={
+              <FormHeader
+                header="Thời hạn hiệu lực của giấy CNBH"
+                extra="(365 ngày bao gồm cả ngày bắt đầu và ngày kết thúc)"
+              />
+            }
+          >
+            <VehicleInfoForm register={register} />
+          </Section>
 
-        <Separator />
+          <Separator />
 
-        <Section
-          header={
-            <FormHeader
-              header="Loại hình bảo hiểm đăng ký và phí"
-              extra=""
-            />
-          }
-        >
-          <OptionForm />
-        </Section>
+          <Section
+            header={
+              <FormHeader header="Loại hình bảo hiểm đăng ký và phí" extra="" />
+            }
+          >
+            <OptionForm register={register} />
+          </Section>
+        </form>
       </div>
     </div>
   )

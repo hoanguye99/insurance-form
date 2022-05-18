@@ -1,6 +1,7 @@
 import { useAppDispatch } from 'app/hooks'
 import { Button } from 'components/styled'
 import { logout } from 'features/auth/user-login-slice'
+import { resetProductList } from 'features/product/product-list-slice'
 import React from 'react'
 import { Outlet, Link, useNavigate } from 'react-router-dom'
 import logo from 'utils/assets/images/FPT_logo_2010.svg.png'
@@ -10,6 +11,7 @@ export const MainLayout = () => {
   let navigate = useNavigate()
   function handleLogoutButton() {
     dispatch(logout())
+    dispatch(resetProductList())
     navigate('/')
   }
   function handleAboutButton() {
