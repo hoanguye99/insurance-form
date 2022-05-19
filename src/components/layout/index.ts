@@ -1,2 +1,2 @@
-export * from './main-layout'
-export * from './empty-layout'
+export * from './main'
+export * from './empty'

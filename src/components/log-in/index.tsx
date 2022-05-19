@@ -12,10 +12,10 @@ export const Login = () => {
   useEffect(() => {
     switch (userDetail.role) {
       case 'USER':
-        navigate('submit')
+        navigate('/submit/individual')
         break
       case 'ADMIN':
-        navigate('admin')
+        navigate('/manage')
         break
       case 'ANONYMOUS':
         navigate('/')

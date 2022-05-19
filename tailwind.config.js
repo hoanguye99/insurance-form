@@ -4,6 +4,9 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    container: {
+      padding: '2.5rem',
+    },
   },
   plugins: [],
 }

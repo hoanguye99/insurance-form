@@ -2,7 +2,7 @@ import React from 'react'
 
 const About = () => {
   return (
-    <div className="container mx-auto my-10 flex justify-center ">
+    <div className="container mx-auto flex justify-center ">
       <table className="border-collapse table-auto border border-slate-500 shadow">
         <thead>
           <tr>
