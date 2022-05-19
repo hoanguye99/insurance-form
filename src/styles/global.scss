@@ -4,12 +4,12 @@
 @tailwind utilities;
 
 @layer base {
-  td {
-    @apply border border-slate-700 p-3 text-center bg-white;
-  }
-  th {
-    @apply border border-slate-600 p-3 bg-slate-300;
-  }
+  // td {
+  //   @apply border border-slate-700 p-3 text-center bg-white;
+  // }
+  // th {
+  //   @apply border border-slate-600 p-3 bg-slate-100;
+  // }
   /* ... */
 }
 

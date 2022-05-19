@@ -1,5 +1,4 @@
-import { GetAllProductTypeResponse } from 'models/api';
-import { CreateOrderFormData } from 'models/api/order-api';
+import { CreateOrderFormData, GetAllInsuranceOrdersResponse } from 'models/api/order-api';
 import { UserDetail } from 'models/features';
 import axiosClient from './axios-client';
 
@@ -13,6 +12,16 @@ const orderApi = {
     }
     const url = '/ins';
     return axiosClient.post(url, orderDetail, config);
+  },
+
+  getAllInsuranceOrders(userDetail: UserDetail): Promise<GetAllInsuranceOrdersResponse> {
+    const config = {
+      headers: {
+        token: userDetail.accessToken,
+      },
+    }
+    const url = '/ins';
+    return axiosClient.get(url, config);
   }
 
 };

@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import { userLoginReducer } from 'features/auth/user-login-slice'
 import counterReducer from 'features/counter/counterSlice'
+import { orderListReducer } from 'features/order/order-list-slice'
 import { productListReducer } from 'features/product/product-list-slice'
 
 export const store = configureStore({
@@ -8,8 +9,8 @@ export const store = configureStore({
     counter: counterReducer,
     userLogin: userLoginReducer,
     
-
-    productList: productListReducer
+    productList: productListReducer,
+    orderList: orderListReducer
   },
 })
 

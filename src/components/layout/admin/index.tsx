@@ -1,10 +1,9 @@
 import { useAppDispatch } from 'app/hooks'
 import { Button } from 'components/styled'
 import { logout } from 'features/auth/user-login-slice'
-import { resetProductList } from 'features/product/product-list-slice'
+import { resetOrderList } from 'features/order/order-list-slice'
 import React from 'react'
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
-import logo from 'utils/assets/images/FPT_logo_2010.svg.png'
 import Sidebar from './side-bar'
 
 export const AdminLayout = () => {
@@ -19,6 +18,7 @@ export const AdminLayout = () => {
   let navigate = useNavigate()
   function handleLogoutButton() {
     dispatch(logout())
+    dispatch(resetOrderList())
     navigate('/')
   }
 

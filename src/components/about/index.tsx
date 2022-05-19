@@ -1,9 +1,10 @@
 import React from 'react'
+import styles from 'styles/component/about/table.module.scss'
 
 const About = () => {
   return (
     <div className="container mx-auto flex justify-center ">
-      <table className="border-collapse table-auto border border-slate-500 shadow">
+      <table className={styles['main-table']}>
         <thead>
           <tr>
             <th>Đối tượng Bảo hiểm</th>
