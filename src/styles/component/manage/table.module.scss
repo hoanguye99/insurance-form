@@ -1,9 +1,9 @@
 .main-table {
-  @apply border-collapse border border-slate-500 table-auto shadow text-sm;
+  @apply border-collapse border border-slate-200 table-auto shadow text-sm;
   td {
-    @apply border-none border-slate-700 p-3 text-center bg-white;
+    @apply border-t border-b border-slate-200 p-3 text-center bg-white;
   }
   th {
-    @apply border-none border-slate-600 p-3 bg-slate-100;
+    @apply border-t border-b border-slate-200 p-3 bg-slate-100 text-xs text-gray-700;
   }
 }

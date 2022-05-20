@@ -1,6 +1,8 @@
 import { useAppSelector } from 'app/hooks'
+import AdminActionButton from 'components/common/admin-action-button'
 import { selectOrderList } from 'features/order/order-list-slice'
-import { GetAllInsuranceOrdersResponse } from 'models/api'
+import { GetAllInsuranceOrdersResponse, InsuranceOrder } from 'models/api'
+import { OrderStatus } from 'models/components/manage'
 import React from 'react'
 import styles from 'styles/component/manage/table.module.scss'
 type Props = {}
@@ -9,10 +11,27 @@ const ManageTable = (props: Props) => {
   const orderList = useAppSelector(
     selectOrderList
   ) as GetAllInsuranceOrdersResponse
-  return orderList.ins && (
+  return (
+    orderList.ins && (
       <table className={styles['main-table']}>
         <thead>
           <tr className="bg-[#f9fbfd] uppercase font-extrabold">
+            {/* <th>
+              <div className="custom-control custom-checkbox table-checkbox">
+                <input
+                  type="checkbox"
+                  className="custom-control-input"
+                  name="ordersSelect"
+                  id="ordersSelectAll"
+                />
+                <label
+                  className="custom-control-label"
+                  htmlFor="ordersSelectAll"
+                >
+                  &nbsp;
+                </label>
+              </div>
+            </th> */}
             <th>
               <span className="">Loại bảo hiểm</span>
             </th>
@@ -41,61 +60,80 @@ const ManageTable = (props: Props) => {
               <span className="text-muted ">Trạng thái</span>
             </th>
             <th>
-              <span className="text-muted ">Action</span>
+              <span className="text-muted "></span>
             </th>
           </tr>
         </thead>
         <tbody className="">
-          {/* <tr>
-                      <td>
-                        <div className="custom-control custom-checkbox table-checkbox">
-                          <input type="checkbox" className="custom-control-input" name="ordersSelect" id="ordersSelectOne">
-                          <label className="custom-control-label" for="ordersSelectOne">
-                            &nbsp;
-                          </label>
-                        </div>
-                      </td>
-                      <td className="orders-order">
-                        #6520
-                      </td>
-                      <td className="orders-product">
-                        5' x 3' Wall Poster
-                      </td>
-                      <td className="orders-date">
-                        <time datetime="2018-07-30">07/30/18</time>
-                      </td>
-                      <td className="orders-total">
-                        $55.25
-                      </td>
-                      <td className="orders-status">
-                        <div className="badge badge-soft-success">
-                          Shipped
-                        </div>
-                      </td>
-                      <td className="orders-method">
-                        Mastercard
-                      </td>
-                      <td className="text-right">
-                        <div className="dropdown">
-                          <a href="#" className="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i className="fe fe-more-vertical"></i>
-                          </a>
-                          <div className="dropdown-menu dropdown-menu-right">
-                            <a href="#!" className="dropdown-item">
-                              Action
-                            </a>
-                            <a href="#!" className="dropdown-item">
-                              Another action
-                            </a>
-                            <a href="#!" className="dropdown-item">
-                              Something else here
-                            </a>
-                          </div>
-                        </div>
-                      </td>
-                    </tr> */}
+          {orderList.ins.map((item) => (
+            <RowData key={item.id} {...item} />
+          ))}
         </tbody>
       </table>
+    )
+  )
+}
+
+interface RowDataProps extends InsuranceOrder {}
+
+const RowData = (props: RowDataProps) => {
+  let showStatus
+  switch (props.status) {
+    case OrderStatus.APPROVED:
+      showStatus = (
+        <div className="w-fit mx-auto font-bolder p-1.5 rounded-lg text-green-500 bg-green-200">
+          Duyệt
+        </div>
+      )
+      break
+    case OrderStatus.PENDING:
+      showStatus = (
+        <div className="w-fit mx-auto font-bolder p-1.5 rounded-lg text-yellow-500 bg-yellow-50">
+          Pending
+        </div>
+      )
+      break
+    case OrderStatus.REJECTED:
+      showStatus = (
+        <div className="w-fit mx-auto font-bolder p-1.5 rounded-lg text-red-500 bg-red-50">
+          Hủy
+        </div>
+      )
+      break
+  }
+
+  return (
+    <tr>
+      {/* <td>
+        <div className="">
+          <input
+            type="checkbox"
+            className="custom-control-input"
+            name="ordersSelect"
+            id="ordersSelectOne"
+          />
+          <label className="custom-control-label" htmlFor="ordersSelectOne">
+            &nbsp;
+          </label>
+        </div>
+      </td> 
+      0 da huy
+      1 pending
+      2 da duyet
+      */}
+      <td className="">{props.typeCode}</td>
+      <td className="">{props.ownerName}</td>
+      <td className="">{props.address}</td>
+      <td className="">{props.plate}</td>
+      <td className="">{props.startDate}</td>
+      <td className="">{props.endDate}</td>
+      <td className="">{props.engineNo}</td>
+      <td className="">{props.chassisNo}</td>
+      <td className="">{showStatus}</td>
+      <td className="text-right">
+        <AdminActionButton {...props} />
+      </td>
+    </tr>
   )
 }
 

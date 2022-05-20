@@ -25,5 +25,5 @@ export interface InsuranceOrder {
   endDate: string
   engineNo: string
   chassisNo: string
-  status: string
+  status: number
 }
