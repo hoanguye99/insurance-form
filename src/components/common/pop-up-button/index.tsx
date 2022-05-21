@@ -14,7 +14,7 @@ const PopUpButton = ({button, popup, showPopUp, setShowPopUp}: PopUpButtonProps)
   //   style: {},
   // })
   const moreInfoRef = useRef<HTMLDivElement>(null)
-  const handlePopUpClick = useCallback(
+  const handlePopUpClickOutside = useCallback(
     () => setShowPopUp({ status: 0, style: {} }),
     []
   )
@@ -82,7 +82,7 @@ const PopUpButton = ({button, popup, showPopUp, setShowPopUp}: PopUpButtonProps)
     <>
       {showPopUp.status === 1 && (
         <PopUp
-          onClickOutside={handlePopUpClick}
+          onClickOutside={handlePopUpClickOutside}
           optionalRef={moreInfoRef}
         >
           <div style={showPopUp.style} className={`fixed z-30`}>

@@ -1,0 +1,9 @@
+.main-table {
+  @apply border-collapse border border-slate-200 table-auto shadow text-sm;
+  td {
+    @apply border border-b border-slate-200 p-3 text-center bg-white;
+  }
+  th {
+    @apply border border-b border-slate-200 p-3 bg-slate-100 text-xs text-gray-700;
+  }
+}

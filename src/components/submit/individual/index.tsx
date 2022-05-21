@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from 'app/hooks'
-import FormHeader from 'components/common/form-header'
+import FormHeader from 'components/submit/individual/form-header'
 import {
   getAllProductTypesAsync,
   selectProductList,
