@@ -16,7 +16,9 @@ const OrderDetailModal = (props: OrderDetailModalProps) => {
     <div className="p-6 flex flex-col">
       <div className="pt-4 pb-10 flex flex-col items-center">
         <Status status={props.status}></Status>
-        <div className="font-['Muli-ExtraBold'] font-thin text-2xl">Bảo hiểm {props.typeCode}</div>
+        <div className="font-['Muli-ExtraBold'] font-thin text-2xl">
+          Bảo hiểm {props.typeCode}
+        </div>
         <div className="text-xl">{props.plate}</div>
       </div>
       <div className="flex justify-between">
@@ -27,8 +29,14 @@ const OrderDetailModal = (props: OrderDetailModalProps) => {
           <ItemSection label="Tổng tiền" value="25.000đ"></ItemSection>
         </div>
         <div className="flex flex-col gap-3 items-end text-right">
-          <ItemSection label="Ngày bắt đầu CNBH" value={props.startDate}></ItemSection>
-          <ItemSection label="Ngày kết thúc CNBH" value={props.endDate}></ItemSection>
+          <ItemSection
+            label="Ngày bắt đầu CNBH"
+            value={props.startDate}
+          ></ItemSection>
+          <ItemSection
+            label="Ngày kết thúc CNBH"
+            value={props.endDate}
+          ></ItemSection>
           <ItemSection label="Số khung" value={props.chassisNo}></ItemSection>
           <ItemSection label="Số máy" value={props.engineNo}></ItemSection>
         </div>
@@ -45,8 +53,10 @@ interface ItemSectionProps {
 
 const ItemSection = (props: ItemSectionProps) => {
   return (
-    <div className='flex flex-col gap-0'>
-      <label className="uppercase text-gray-400 opacity-70 font-['Muli-ExtraBold'] text-xs">{props.label}</label>
+    <div className="flex flex-col gap-0">
+      <label className="uppercase text-gray-400 opacity-70 font-['Muli-ExtraBold'] text-xs">
+        {props.label}
+      </label>
       <div className="font-extrabold">{props.value}</div>
     </div>
   )
@@ -106,34 +116,50 @@ const ActionButtons = (props: ActionButtonsProps) => {
     }
   }
 
-  let buttons
-  switch (props.status) {
-    case OrderStatus.APPROVED:
-      buttons = (
-        <>
-          <RejectButton onClick={handleRejectButtonClick}></RejectButton>
-          <div></div>
-        </>
-      )
-      break
-    case OrderStatus.PENDING:
-      buttons = (
-        <>
-          <RejectButton onClick={handleRejectButtonClick}></RejectButton>
-          <ApproveButton onClick={handleApproveButtonClick}></ApproveButton>
-        </>
-      )
-      break
-    case OrderStatus.REJECTED:
-      buttons = (
-        <>
-          <div></div>
-          <ApproveButton onClick={handleApproveButtonClick}></ApproveButton>
-        </>
-      )
-      break
+  function handleExitButtonClick() {
+    props.onExit()
   }
-  return <div className="mt-12 flex justify-between items-center">{buttons}</div>
+
+  let buttons
+  if (userDetail.role === 'ADMIN') {
+    switch (props.status) {
+      case OrderStatus.APPROVED:
+        buttons = (
+          <>
+            <RejectButton onClick={handleRejectButtonClick}></RejectButton>
+            <div></div>
+          </>
+        )
+        break
+      case OrderStatus.PENDING:
+        buttons = (
+          <>
+            <RejectButton onClick={handleRejectButtonClick}></RejectButton>
+            <ApproveButton onClick={handleApproveButtonClick}></ApproveButton>
+          </>
+        )
+        break
+      case OrderStatus.REJECTED:
+        buttons = (
+          <>
+            <div></div>
+            <ApproveButton onClick={handleApproveButtonClick}></ApproveButton>
+          </>
+        )
+        break
+    }
+  } else if (userDetail.role === 'USER') {
+    buttons = (
+      <>
+        <div></div>
+        <ExitButton onClick={handleExitButtonClick}></ExitButton>
+      </>
+    )
+  }
+
+  return (
+    <div className="mt-12 flex justify-between items-center">{buttons}</div>
+  )
 }
 
 const ApproveButton = (props: { onClick: () => void }) => {
@@ -156,6 +182,10 @@ const RejectButton = (props: { onClick: () => void }) => {
       Từ chối
     </Button>
   )
+}
+
+const ExitButton = (props: { onClick: () => void }) => {
+  return <Button onClick={props.onClick}>Xong</Button>
 }
 
 export default OrderDetailModal

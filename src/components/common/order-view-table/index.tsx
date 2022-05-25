@@ -87,11 +87,8 @@ const MainTable = () => {
             <th>
               <span className="text-muted ">Ngầy kết thúc</span>
             </th>
-            <th>
+            <th className="!pr-3">
               <span className="text-muted ">Trạng thái</span>
-            </th>
-            <th>
-              <span className="text-muted "></span>
             </th>
           </tr>
         </thead>
@@ -112,10 +109,10 @@ const RowData = (props: RowDataProps) => {
 
   let actionButton
   switch (userDetail.role) {
-    case "ADMIN":
+    case 'ADMIN':
       actionButton = <AdminActionButton {...props} />
       break
-    case "USER":
+    case 'USER':
       actionButton = <UserActionButton {...props} />
       break
   }
@@ -124,21 +121,21 @@ const RowData = (props: RowDataProps) => {
   switch (props.status) {
     case OrderStatus.APPROVED:
       showStatus = (
-        <div className="w-fit mx-auto font-bolder p-1.5 rounded-lg text-green-500 bg-green-200">
+        <div className="w-fit font-bolder p-1.5 rounded-lg text-green-500 bg-green-200">
           Approved
         </div>
       )
       break
     case OrderStatus.PENDING:
       showStatus = (
-        <div className="w-fit mx-auto font-bolder p-1.5 rounded-lg text-yellow-500 bg-yellow-50">
+        <div className="w-fit font-bolder p-1.5 rounded-lg text-yellow-500 bg-yellow-50">
           Pending
         </div>
       )
       break
     case OrderStatus.REJECTED:
       showStatus = (
-        <div className="w-fit mx-auto font-bolder p-1.5 rounded-lg text-red-500 bg-red-50">
+        <div className="w-fit font-bolder p-1.5 rounded-lg text-red-500 bg-red-50">
           Rejected
         </div>
       )
@@ -166,13 +163,15 @@ const RowData = (props: RowDataProps) => {
       */}
       <td className="">{props.typeCode}</td>
       <td className="">{props.ownerName}</td>
-      <td className="">{props.address}</td>
+      <td className={styles.address}>{props.address}</td>
       <td className="">{props.plate}</td>
       <td className="">{props.startDate}</td>
       <td className="">{props.endDate}</td>
-      <td className="">{showStatus}</td>
-      <td className="text-right">
-        {actionButton}
+      <td className="!pr-3">
+        <div className="flex justify-between items-center">
+          {showStatus}
+          {actionButton}
+        </div>
       </td>
     </tr>
   )

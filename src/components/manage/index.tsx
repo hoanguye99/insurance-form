@@ -7,13 +7,10 @@ import {
 import { useEffect } from 'react'
 
 const Manage = () => {
-  const orderList = useAppSelector(selectOrderList)
   const dispatch = useAppDispatch()
   useEffect(() => {
-    if (Object.keys(orderList).length === 0) {
       dispatch(getAllOrdersAsync())
-    }
-  }, [orderList])
+  }, [])
 
   return <OrderViewTable />
 }

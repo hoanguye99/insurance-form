@@ -1,13 +1,18 @@
-import React from 'react'
+import { useAppDispatch, useAppSelector } from 'app/hooks'
+import OrderViewTable from 'components/common/order-view-table'
+import {
+  getAllOrdersAsync,
+  selectOrderList,
+} from 'features/order/order-list-slice'
+import { useEffect } from 'react'
 
-type Props = {}
+const Orders = () => {
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+      dispatch(getAllOrdersAsync())
+  }, [])
 
-const Orders = (props: Props) => {
-  return (
-    <div className=" container mx-auto ">
-      <div>This is the order page</div>
-    </div>
-  )
+  return <OrderViewTable />
 }
 
 export default Orders

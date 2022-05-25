@@ -11,11 +11,11 @@ interface LinkTabProps {
 const LinkTab = (props: LinkTabProps) => {
   return (
     <li
-      className={`block group py-2 ${
+      className={`block group  ${
         props.selected ? 'bg-[#f3f4f6] border-l-[3px] border-l-blue-500 border-r' : ''
       }`}
     >
-      <Link className="inline-block w-full py-[4px] px-[25px]" to={props.link}>
+      <Link className="inline-block w-full py-3 px-[25px]" to={props.link}>
         <div className={`flex items-center text-gray-500 group-hover:text-black text-sm ${props.selected ? '!text-black' : ''}`}>
           {props.icon}
           <span className="ml-2 text-link-tab">{props.text}</span>
