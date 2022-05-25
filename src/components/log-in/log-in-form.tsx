@@ -1,19 +1,28 @@
 import loginApi from 'api/login-api'
 import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { Button, Input, Label } from 'components/styled'
-import { loginAsync, selectFailureDescription } from 'features/auth/user-login-slice'
-import { useForm, SubmitHandler } from "react-hook-form";
+import {
+  loginAsync,
+  selectFailureDescription,
+  selectStatus,
+} from 'features/auth/user-login-slice'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import React from 'react'
 
 export type LoginFormData = {
-  username: string;
-  password: string;
-};
+  username: string
+  password: string
+}
 
 const LoginForm = () => {
   const failureDescription = useAppSelector(selectFailureDescription)
+  const status = useAppSelector(selectStatus)
   const dispatch = useAppDispatch()
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>()
   const handleFormSubmit: SubmitHandler<LoginFormData> = async (data) => {
     // loginApi
     //   .add({ username: 'hoangnd25@fpt.com.vn', password: 'ArianaGrande2' })
@@ -52,9 +61,15 @@ const LoginForm = () => {
           required={true}
         />
       </div>
-      {failureDescription && failureDescription != '' && <p className='mt-3 -mb-3 italic text-red-500 text-sm'>{failureDescription}</p>}
+      {failureDescription && failureDescription != '' && (
+        <p className="mt-3 -mb-3 italic text-red-500 text-sm">
+          {failureDescription}
+        </p>
+      )}
       <div className="mt-6">
-        <Button className="w-full">Đăng nhập</Button>
+        <Button posting={status === 'loading'} className="w-full">
+          Đăng nhập
+        </Button>
       </div>
     </form>
   )

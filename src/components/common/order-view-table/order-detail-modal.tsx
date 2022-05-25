@@ -2,10 +2,12 @@ import orderApi from 'api/order-api'
 import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { Button } from 'components/styled'
 import { selectUserDetail } from 'features/auth/user-login-slice'
+import { selectOrderCreateResponse } from 'features/order/order-create-slice'
 import { getAllOrdersAsync } from 'features/order/order-list-slice'
 import { InsuranceOrder } from 'models/api'
 import { OrderStatus } from 'models/components/common'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface OrderDetailModalProps extends InsuranceOrder {
   onExit: () => void
@@ -23,7 +25,7 @@ const OrderDetailModal = (props: OrderDetailModalProps) => {
       </div>
       <div className="flex justify-between">
         <div className="flex flex-col gap-3">
-          <ItemSection label="Account Mail" value="HoangND25"></ItemSection>
+          <ItemSection label="Account Mail" value={props.userName}></ItemSection>
           <ItemSection label="Chủ xe" value={props.ownerName}></ItemSection>
           <ItemSection label="Địa chỉ" value={props.address}></ItemSection>
           <ItemSection label="Tổng tiền" value="25.000đ"></ItemSection>
@@ -93,7 +95,9 @@ const Status = (props: StatusProps) => {
 interface ActionButtonsProps extends OrderDetailModalProps {}
 const ActionButtons = (props: ActionButtonsProps) => {
   const userDetail = useAppSelector(selectUserDetail)
+  const orderCreateResponse = useAppSelector(selectOrderCreateResponse)
   const dispatch = useAppDispatch()
+  let navigate = useNavigate()
   async function handleApproveButtonClick() {
     try {
       props.onExit()
@@ -118,6 +122,16 @@ const ActionButtons = (props: ActionButtonsProps) => {
 
   function handleExitButtonClick() {
     props.onExit()
+  }
+
+  function handleBackButtonClick() {
+    props.onExit()
+    navigate('/submit/individual')
+  }
+
+  function handleOrdersButtonClick() {
+    props.onExit()
+    navigate('/orders')
   }
 
   let buttons
@@ -149,12 +163,21 @@ const ActionButtons = (props: ActionButtonsProps) => {
         break
     }
   } else if (userDetail.role === 'USER') {
-    buttons = (
-      <>
-        <div></div>
-        <ExitButton onClick={handleExitButtonClick}></ExitButton>
-      </>
-    )
+    if (Object.keys(orderCreateResponse).length === 0) {
+      buttons = (
+        <>
+          <div></div>
+          <Button onClick={handleExitButtonClick}>Xong</Button>
+        </>
+      )
+    } else {
+      buttons = (
+        <>
+          <Button onClick={handleBackButtonClick}>Quay lại</Button>
+          <Button onClick={handleOrdersButtonClick}>Đơn hàng</Button>
+        </>
+      )
+    }
   }
 
   return (
@@ -182,10 +205,6 @@ const RejectButton = (props: { onClick: () => void }) => {
       Từ chối
     </Button>
   )
-}
-
-const ExitButton = (props: { onClick: () => void }) => {
-  return <Button onClick={props.onClick}>Xong</Button>
 }
 
 export default OrderDetailModal

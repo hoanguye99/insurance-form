@@ -48,8 +48,12 @@ const MainTable = () => {
     selectOrderList
   ) as GetAllInsuranceOrdersResponse
 
-  return (
-    orderList.ins && (
+  return orderList.ins ? (
+    orderList.ins.length === 0 ? (
+      <p className="text-center font-thin text-2xl">
+        Bạn hiện chưa có đơn hàng nào!
+      </p>
+    ) : (
       <table className={styles['main-table']}>
         <thead>
           <tr className="bg-[#f9fbfd] uppercase font-extrabold">
@@ -99,6 +103,8 @@ const MainTable = () => {
         </tbody>
       </table>
     )
+  ) : (
+    <></>
   )
 }
 

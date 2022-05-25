@@ -1,10 +1,10 @@
-import { CreateOrderFormData, GetAllInsuranceOrdersResponse } from 'models/api/order-api';
+import { CreateOrderFormData, GetAllInsuranceOrdersResponse, InsuranceOrder } from 'models/api';
 import { UserDetail } from 'models/features';
 import axiosClient from './axios-client';
 
 const orderApi = {
 
-  createInsuranceOrder(orderDetail: CreateOrderFormData, userDetail: UserDetail): Promise<any> {
+  createInsuranceOrder(orderDetail: CreateOrderFormData, userDetail: UserDetail): Promise<InsuranceOrder> {
     const config = {
       headers: {
         token: userDetail.accessToken,
