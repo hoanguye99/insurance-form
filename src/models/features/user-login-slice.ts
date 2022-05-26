@@ -17,3 +17,14 @@ export interface LoginType {
   username: string
   password: string
 }
+
+export interface AccessTokenDecoded {
+  displayName: string
+  userName: string
+  email: string
+  role: string
+  type: string
+  permissions: string
+  exp: number
+  iat: number
+}

@@ -1,4 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
+import { sessionTimeoutTimerReducer } from 'features/auth/session-timeout-timer-slice'
 import { userLoginReducer } from 'features/auth/user-login-slice'
 import counterReducer from 'features/counter/counterSlice'
 import { orderCreateReducer } from 'features/order/order-create-slice'
@@ -9,7 +10,8 @@ export const store = configureStore({
   reducer: {
     counter: counterReducer,
     userLogin: userLoginReducer,
-    
+    sessionTimeoutTimer: sessionTimeoutTimerReducer,
+
     productList: productListReducer,
 
 

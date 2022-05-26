@@ -1,6 +1,5 @@
 import { useAppSelector } from 'app/hooks'
 import {
-  selectLoggedIn,
   selectUserDetail,
 } from 'features/auth/user-login-slice'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
@@ -12,10 +11,12 @@ import Individual from 'components/submit/individual'
 import Group from 'components/submit/group'
 import Orders from 'components/orders'
 import { AdminLayout } from 'components/layout/admin'
+import { useRefreshToken } from 'hooks/useRefreshToken'
 
 function App() {
   const userDetail = useAppSelector(selectUserDetail)
 
+  useRefreshToken();
   let routes
   switch (userDetail.role) {
     case 'USER':

@@ -1,9 +1,6 @@
-import { useAppDispatch } from 'app/hooks'
 import { Button } from 'components/styled'
-import { logout } from 'features/auth/user-login-slice'
-import { resetOrderList } from 'features/order/order-list-slice'
-import React from 'react'
-import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
+import { useAdminLogout } from 'hooks/useAdminLogout'
+import { Outlet, useLocation } from 'react-router-dom'
 import Sidebar from './side-bar'
 
 export const AdminLayout = () => {
@@ -14,14 +11,8 @@ export const AdminLayout = () => {
     '/manage': 'Quản lý'
   }
 
-  const dispatch = useAppDispatch()
-  let navigate = useNavigate()
-  function handleLogoutButton() {
-    dispatch(logout())
-    dispatch(resetOrderList())
-    navigate('/')
-  }
-
+  const {handleLogoutButton} = useAdminLogout()
+  
   return (
     <div className="bg-[#f3f4f6] flex flex-row h-screen">
       <Sidebar currentPath={location.pathname} />

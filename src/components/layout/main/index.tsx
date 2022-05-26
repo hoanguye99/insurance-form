@@ -1,10 +1,6 @@
-import { useAppDispatch } from 'app/hooks'
 import { Button } from 'components/styled'
-import { logout } from 'features/auth/user-login-slice'
-import { resetProductList } from 'features/product/product-list-slice'
-import React from 'react'
-import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
-import logo from 'utils/assets/images/FPT_logo_2010.svg.png'
+import { useUserLogout } from 'hooks/useUserLogout'
+import { Outlet, useLocation } from 'react-router-dom'
 import Sidebar from './side-bar'
 
 export const MainLayout = () => {
@@ -17,13 +13,7 @@ export const MainLayout = () => {
     '/orders': 'Lịch sử',
   }
 
-  const dispatch = useAppDispatch()
-  let navigate = useNavigate()
-  function handleLogoutButton() {
-    dispatch(logout())
-    dispatch(resetProductList())
-    navigate('/')
-  }
+  const {handleLogoutButton} = useUserLogout()
 
   return (
     <div className="bg-[#f3f4f6] flex flex-row h-screen">
