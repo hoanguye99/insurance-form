@@ -35,8 +35,6 @@ const UserActionButton = (props: InsuranceOrder) => {
 
       {showDetailModal && (
         <Portal>
-          <div className="fixed inset-0 bg-black opacity-40 flex justify-center items-center animate-opacity ">
-          </div>
             <PopUp onClickOutside={() => setShowDetailModal(false)}>
               <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white animate-popup rounded max-w-md w-full">
                 <OrderDetailModal onExit={() => setShowDetailModal(false)} {...props}></OrderDetailModal>

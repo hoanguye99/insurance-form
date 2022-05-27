@@ -10,7 +10,12 @@ import React, { useState } from 'react'
 import PopUpButton from '../../pop-up-button'
 import PopUp from 'components/common/pop-up'
 import OrderDetailModal from '../order-detail-modal'
-import { ActionButton, ApproveButton, DetailButton, RejectButton } from '../common'
+import {
+  ActionButton,
+  ApproveButton,
+  DetailButton,
+  RejectButton,
+} from '../common'
 
 const AdminActionButton = (props: InsuranceOrder) => {
   const [showPopUp, setShowPopUp] = useState<ShowPopUp>({
@@ -35,20 +40,19 @@ const AdminActionButton = (props: InsuranceOrder) => {
 
       {showDetailModal && (
         <Portal>
-          <div className="fixed inset-0 bg-black opacity-40 flex justify-center items-center animate-opacity ">
-          </div>
-            <PopUp onClickOutside={() => setShowDetailModal(false)}>
-              <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white animate-popup rounded max-w-md w-full">
-                <OrderDetailModal onExit={() => setShowDetailModal(false)} {...props}></OrderDetailModal>
-              </div>
-            </PopUp>
+          <PopUp onClickOutside={() => setShowDetailModal(false)}>
+            <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white animate-popup rounded max-w-md w-full">
+              <OrderDetailModal
+                onExit={() => setShowDetailModal(false)}
+                {...props}
+              ></OrderDetailModal>
+            </div>
+          </PopUp>
         </Portal>
       )}
-
     </>
   )
 }
-
 
 interface PopUp2Props extends InsuranceOrder {
   setShowPopUp: React.Dispatch<React.SetStateAction<ShowPopUp>>
@@ -115,6 +119,5 @@ const PopUp2 = (props: PopUp2Props) => {
   }
   return <div className="bg-white rounded shadow flex flex-col">{buttons}</div>
 }
-
 
 export default AdminActionButton

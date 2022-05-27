@@ -2,7 +2,7 @@ export const Footer = () => {
   return (
     <div className="container mx-auto">
       <div className="py-5 border-t border-gray-200" />
-      <div className="grid gap-y-4 mb-8 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-y-8 mb-8 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2">
           <button className=" w-[120px] h-[40px] bg-left-top bg-no-repeat bg-contain bg-[url('../utils/assets/images/FPT_logo_2010.svg.png')]">
             <p className='font-["Muli-ExtraBold"] text-blue-500 text-xl ml-12'>
@@ -97,7 +97,7 @@ export const Footer = () => {
           </p>
         </div>
       </div>
-      <div className="flex flex-col-reverse justify-between pt-7 pb-8  lg:flex-row">
+      <div className="flex flex-col-reverse justify-between pt-0 sm:pt-7 pb-8  lg:flex-row">
         <div>
           <p className="text-sm text-gray-500">
             © Copyright 2022 FPT Information System

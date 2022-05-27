@@ -10,10 +10,10 @@ type Props = {
     icon: JSX.Element
     text: string
   }[]
+  handleLogoutButton: () => void
 }
 
 const Sidebar = (props: Props) => {
-  const { handleLogoutButton } = useUserLogout()
   return (
     <div className="bg-white w-[230px] pt-[70px] hidden lg:block">
       <div className="h-full flex flex-col">
@@ -37,7 +37,7 @@ const Sidebar = (props: Props) => {
 
             <li className="block group mt-auto border-t hover:bg-gray-50">
               <button
-                onClick={handleLogoutButton}
+                onClick={props.handleLogoutButton}
                 className="inline-block w-full py-3 px-[25px]"
               >
                 <div

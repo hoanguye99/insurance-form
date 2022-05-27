@@ -1,9 +1,12 @@
+import { Footer } from 'components/footer'
+import { useAdminLogout } from 'hooks/useAdminLogout'
 import { Outlet, useLocation } from 'react-router-dom'
+import Header from '../common/header'
 import Sidebar from '../common/side-bar'
 
 export const AdminLayout = () => {
   const location = useLocation()
-
+  const { handleLogoutButton } = useAdminLogout()
   const data = [
     {
       link: '/about',
@@ -49,9 +52,20 @@ export const AdminLayout = () => {
 
   return (
     <div className="bg-[#f3f4f6] flex flex-row h-screen">
-      <Sidebar currentPath={location.pathname} data={data} />
-      <div id="body-overflow" className="flex-1 h-full overflow-y-auto">
-        <Outlet />
+      <Sidebar
+        handleLogoutButton={handleLogoutButton}
+        currentPath={location.pathname}
+        data={data}
+      />
+      <div
+        id="body-overflow"
+        className="flex-1 lg:h-full lg:mt-0 h-body mt-[70px] overflow-y-auto"
+      >
+        <div className="min-h-screen">
+          <Header handleLogoutButton={handleLogoutButton} data={data} />
+          <Outlet />
+        </div>
+        <Footer />
       </div>
     </div>
   )

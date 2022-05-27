@@ -3,6 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .h-body {
+    height: calc(100vh - 70px);
+  }
+}
+
 @layer base {
   // td {
   //   @apply border border-slate-700 p-3 text-center bg-white;
