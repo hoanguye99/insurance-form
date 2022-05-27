@@ -14,9 +14,12 @@ const OrderViewTable = () => {
   switch (orderStatus) {
     case 'loading':
       return (
-        <div className="flex justify-center item-center">
+        <div className="container mx-auto">
+          <p className="text-2xl font-['Muli-ExtraBold'] text-gray-900 mt-5 mb-10">
+            Đơn hàng
+          </p>
           <svg
-            className="w-20 h-20 text-gray-200 animate-spin fill-blue-500"
+            className="w-20 h-20 text-gray-200 animate-spin fill-blue-500 mx-auto"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -35,6 +38,9 @@ const OrderViewTable = () => {
     case 'idle':
       return (
         <div className="container mx-auto">
+          <p className="text-2xl font-['Muli-ExtraBold'] text-gray-900 mt-5 mb-10">
+            Đơn hàng
+          </p>
           <MainTable />
         </div>
       )

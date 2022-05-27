@@ -3,7 +3,10 @@ import styles from 'styles/components/about/table.module.scss'
 
 const About = () => {
   return (
-    <div className="container mx-auto flex justify-center ">
+    <div className="container mx-auto">
+      <p className="text-2xl font-['Muli-ExtraBold'] text-gray-900 mt-5 mb-10">
+          Bảng giá
+        </p>
       <table className={styles['main-table']}>
         <thead>
           <tr>
