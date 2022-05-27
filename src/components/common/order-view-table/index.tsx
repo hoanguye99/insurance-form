@@ -41,7 +41,9 @@ const OrderViewTable = () => {
           <p className="text-2xl font-['Muli-ExtraBold'] text-gray-900 mt-5 mb-10">
             Đơn hàng
           </p>
-          <MainTable />
+          <div className="overflow-x-auto">
+            <MainTable />
+          </div>
         </div>
       )
     default:
