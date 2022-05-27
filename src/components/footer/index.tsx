@@ -97,10 +97,10 @@ export const Footer = () => {
           </p>
         </div>
       </div>
-      <div className="flex flex-col-reverse justify-between pt-2 pb-8 border-t lg:flex-row">
+      <div className="flex flex-col-reverse justify-between pt-7 pb-8  lg:flex-row">
         <div>
           <p className="text-sm text-gray-500">
-            © Copyright 2021 FPT Information System
+            © Copyright 2022 FPT Information System
           </p>
           <p className="text-sm text-gray-500">
             © Images from <a href="http://www.freepik.com">Freepik</a>

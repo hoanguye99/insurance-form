@@ -1,7 +1,5 @@
 import { useAppSelector } from 'app/hooks'
-import {
-  selectUserDetail,
-} from 'features/auth/user-login-slice'
+import { selectUserDetail } from 'features/auth/user-login-slice'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { MainLayout, EmptyLayout } from 'components/layout'
 import { Login } from 'components/log-in'
@@ -12,11 +10,12 @@ import Group from 'components/submit/group'
 import Orders from 'components/orders'
 import { AdminLayout } from 'components/layout/admin'
 import { useRefreshToken } from 'hooks/useRefreshToken'
+import ScrollToTop from 'components/common/scroll-to-top'
 
 function App() {
   const userDetail = useAppSelector(selectUserDetail)
 
-  useRefreshToken();
+  useRefreshToken()
   let routes
   switch (userDetail.role) {
     case 'USER':
@@ -89,7 +88,11 @@ function App() {
       break
   }
 
-  return <BrowserRouter>{routes}</BrowserRouter>
+  return (
+    <BrowserRouter>
+      <ScrollToTop>{routes}</ScrollToTop>
+    </BrowserRouter>
+  )
 }
 
 export default App
