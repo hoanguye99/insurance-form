@@ -102,7 +102,7 @@ export const MainLayout = () => {
         id="body-overflow"
         className="flex-1 lg:h-full lg:mt-0 h-body mt-[70px] overflow-y-auto"
       >
-        <div className="min-h-screen">
+        <div className="lg:min-h-screen min-h-body">
           <Header handleLogoutButton={handleLogoutButton} data={data} />
           <Outlet />
         </div>
