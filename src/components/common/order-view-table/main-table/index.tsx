@@ -35,14 +35,24 @@ const MainTable = () => {
       {
         Header: 'BẮT ĐẦU',
         accessor: 'startDate',
-        // sortType: (rowA, rowB, columnId, desc) => {
-        //   rowA.values.columnId
-        //   return 1
-        // }
+        sortType: (rowA, rowB, columnId, desc) => {
+          return rowB.values[columnId]
+            .split('/')
+            .reverse()
+            .join('')
+            .localeCompare(rowA.values[columnId].split('/').reverse().join(''))
+        },
       },
       {
         Header: 'KẾT THÚC',
         accessor: 'endDate',
+        sortType: (rowA, rowB, columnId, desc) => {
+          return rowB.values[columnId]
+            .split('/')
+            .reverse()
+            .join('')
+            .localeCompare(rowA.values[columnId].split('/').reverse().join(''))
+        },
       },
       {
         Header: 'TRẠNG THÁI',
@@ -88,7 +98,7 @@ const MainTable = () => {
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
-                          strokeWidth={2}
+                          strokeWidth={1.5}
                         >
                           <path
                             strokeLinecap="round"
