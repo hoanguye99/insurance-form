@@ -21,7 +21,7 @@ export const Footer = () => {
           </div>
         </div>
         <div className="space-y-2 text-sm text-gray-500 lg:px-3">
-          <p className="text-base font-bold tracking-wide text-gray-900 lg:mb-12">
+          <p className="text-lg font-extrabold tracking-wide text-gray-900 lg:mb-12">
             Liên hệ
           </p>
           <div className="flex">
@@ -61,7 +61,7 @@ export const Footer = () => {
           </div>
         </div>
         <div>
-          <span className="text-base font-bold tracking-wide text-gray-900">
+          <span className="text-lg font-extrabold tracking-wide text-gray-900">
             Media
           </span>
           <div className="flex items-center mt-1 space-x-3">

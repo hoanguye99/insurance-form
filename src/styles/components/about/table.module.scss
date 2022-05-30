@@ -1,5 +1,5 @@
 .main-table {
-  @apply border-collapse table-auto border border-slate-500 shadow text-sm;
+  @apply w-full border-collapse table-auto border border-slate-500 shadow text-sm;
   td {
     @apply border border-slate-700 p-3 text-center bg-white;
   }
