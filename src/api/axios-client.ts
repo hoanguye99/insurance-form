@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 const axiosClient = axios.create({
   // baseURL: 'http://207.148.28.161:30001',
   // baseURL: 'http://10.14.171.23:8080',
-  baseURL: 'http://api.smart-market.vn',
+  baseURL: process.env.REACT_APP_BACK_END_DOMAIN,
   headers: {
     'Content-Type': 'application/json',
   },
