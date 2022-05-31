@@ -1,3 +1,4 @@
+import { OrderStatus } from 'models/components/common'
 import { Link } from 'react-router-dom'
 import table_empty from 'utils/assets/images/table_empty.jpg'
 
@@ -109,4 +110,28 @@ export const TableEmpty = () => {
       </p>
     </div>
   )
+}
+
+export const StatusSpan = (props: {status: OrderStatus}) => {
+  switch (props.status) {
+    case OrderStatus.APPROVED:
+      return (
+        <div className="w-fit font-bolder p-1.5 rounded-lg text-green-500 bg-green-200">
+          Approved
+        </div>
+      )
+    case OrderStatus.PENDING:
+      return (
+        <div className="w-fit font-bolder p-1.5 rounded-lg text-yellow-500 bg-yellow-50">
+          Pending
+        </div>
+      )
+    case OrderStatus.REJECTED:
+      return (
+        <div className="w-fit font-bolder p-1.5 rounded-lg text-red-500 bg-red-50">
+          Rejected
+        </div>
+      )
+  }
+  return null
 }

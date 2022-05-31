@@ -1,3 +1,5 @@
+import { OrderStatus } from "models/components/common"
+
 export interface CreateOrderFormData {
   typeCode: string
   ownerName: string
@@ -33,5 +35,5 @@ export interface InsuranceOrder {
   endDate: string
   engineNo: string
   chassisNo: string
-  status: number
+  status: OrderStatus
 }

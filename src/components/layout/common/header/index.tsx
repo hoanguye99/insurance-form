@@ -63,8 +63,8 @@ interface MobileMenuProps extends HeaderProps {
 const MobileMenu = (props: MobileMenuProps) => {
   return (
     <div className="p-8 bg-white rounded-lg flex flex-col items-center gap-6">
-      {props.data.map((item) => (
-        <MenuItem setShowMenu={props.setShowMenu} {...item}></MenuItem>
+      {props.data.map((item, index) => (
+        <MenuItem key={index} setShowMenu={props.setShowMenu} {...item}></MenuItem>
       ))}
       <button
         className="py-3 text-gray-500 hover:text-black text-sm"

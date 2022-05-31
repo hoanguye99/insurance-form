@@ -1,10 +1,19 @@
 .main-table {
   @apply w-full border-collapse border border-slate-200 table-auto shadow text-sm;
-  td {
-    @apply  border-b text-left border-slate-200 p-3 pr-8 bg-white;
-  }
-  th {
-    @apply  border-b text-left border-slate-200 p-3 pr-8 bg-slate-100 text-xs text-gray-700;
+  tr {
+
+    td {
+      @apply  border-b text-left border-slate-200 p-3 pr-8 bg-white;
+      &:last-child {
+        @apply pr-0;
+      }
+    }
+    th {
+      @apply  border-b text-left border-slate-200 p-3 pr-8 bg-slate-100 text-xs text-gray-700;
+      &:last-child {
+        @apply pr-0;
+      }
+    }
   }
 
   td.address {
