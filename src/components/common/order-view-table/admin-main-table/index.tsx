@@ -12,12 +12,12 @@ import {
   ArrowUpDown,
   useData,
   useOrdersColumns,
-} from './common'
+} from '../common/react-table-functions/common'
 import React from 'react'
-import { DefaultColumnFilter, GlobalFilter } from './search-functions'
-import { Pagination } from './paging-functions'
+import { DefaultColumnFilter, GlobalFilter } from '../common/react-table-functions/search-functions'
+import { Pagination } from '../common/react-table-functions/paging-functions'
 
-const MainTable = () => {
+const AdminMainTable = () => {
   const data = useData()
   const columns = useOrdersColumns()
 
@@ -147,4 +147,4 @@ const MainTable = () => {
 }
 
 
-export default MainTable
+export default AdminMainTable

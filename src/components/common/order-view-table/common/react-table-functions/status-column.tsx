@@ -1,9 +1,9 @@
 import { useAppSelector } from 'app/hooks'
 import { selectUserDetail } from 'features/auth/user-login-slice'
 import { InsuranceOrder } from 'models/api'
-import AdminActionButton from '../admin-action-button'
-import { StatusSpan } from '../common'
-import UserActionButton from '../user-action-button'
+import AdminActionButton from '../../admin-main-table/admin-action-button'
+import { StatusSpan } from '../pure-functions'
+import UserActionButton from '../../user-main-table/user-action-button'
 
 interface StatusColumnProps extends InsuranceOrder {}
 

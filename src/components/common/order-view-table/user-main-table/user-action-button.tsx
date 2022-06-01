@@ -9,15 +9,10 @@ import { OrderStatus } from 'models/components/common'
 import React, { useState } from 'react'
 import PopUpButton from '../../pop-up-button'
 import PopUp from 'components/common/pop-up'
-import OrderDetailModal from '../order-detail-modal'
-import {
-  ActionButton,
-  ApproveButton,
-  DetailButton,
-  RejectButton,
-} from '../common'
+import OrderDetailModal from '../common/order-detail-modal'
+import { ActionButton, DetailButton, EditButton } from '../common/pure-functions'
 
-const AdminActionButton = (props: InsuranceOrder) => {
+const UserActionButton = (props: InsuranceOrder) => {
   const [showPopUp, setShowPopUp] = useState<ShowPopUp>({
     status: 0,
     style: {},
@@ -40,19 +35,18 @@ const AdminActionButton = (props: InsuranceOrder) => {
 
       {showDetailModal && (
         <Portal>
-          <PopUp onClickOutside={() => setShowDetailModal(false)}>
-            <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white animate-popup rounded max-w-md w-full">
-              <OrderDetailModal
-                onExit={() => setShowDetailModal(false)}
-                {...props}
-              ></OrderDetailModal>
-            </div>
-          </PopUp>
+            <PopUp onClickOutside={() => setShowDetailModal(false)}>
+              <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white animate-popup rounded max-w-md w-full">
+                <OrderDetailModal onExit={() => setShowDetailModal(false)} {...props}></OrderDetailModal>
+              </div>
+            </PopUp>
         </Portal>
       )}
+
     </>
   )
 }
+
 
 interface PopUp2Props extends InsuranceOrder {
   setShowPopUp: React.Dispatch<React.SetStateAction<ShowPopUp>>
@@ -62,29 +56,13 @@ interface PopUp2Props extends InsuranceOrder {
 const PopUp2 = (props: PopUp2Props) => {
   const userDetail = useAppSelector(selectUserDetail)
   const dispatch = useAppDispatch()
-  async function handleApproveButtonClick() {
-    try {
-      props.setShowPopUp({ status: 0, style: {} })
-      const data = await orderApi.approveInsuranceOrder(props.id, userDetail)
-      console.log(data)
-      dispatch(getAllOrdersAsync())
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  async function handleRejectButtonClick() {
-    try {
-      props.setShowPopUp({ status: 0, style: {} })
-      const data = await orderApi.rejectInsuranceOrder(props.id, userDetail)
-      console.log(data)
-      dispatch(getAllOrdersAsync())
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   function handleDetailButtonClick() {
+    props.setShowPopUp({ status: 0, style: {} })
+    props.setShowDetailModal(true)
+  }
+
+  function handleEditButtonClick() {
     props.setShowPopUp({ status: 0, style: {} })
     props.setShowDetailModal(true)
   }
@@ -95,7 +73,6 @@ const PopUp2 = (props: PopUp2Props) => {
       buttons = (
         <>
           <DetailButton onClick={handleDetailButtonClick}></DetailButton>
-          <RejectButton onClick={handleRejectButtonClick}></RejectButton>
         </>
       )
       break
@@ -103,8 +80,7 @@ const PopUp2 = (props: PopUp2Props) => {
       buttons = (
         <>
           <DetailButton onClick={handleDetailButtonClick}></DetailButton>
-          <ApproveButton onClick={handleApproveButtonClick}></ApproveButton>
-          <RejectButton onClick={handleRejectButtonClick}></RejectButton>
+          <EditButton onClick={handleEditButtonClick}></EditButton>
         </>
       )
       break
@@ -112,7 +88,6 @@ const PopUp2 = (props: PopUp2Props) => {
       buttons = (
         <>
           <DetailButton onClick={handleDetailButtonClick}></DetailButton>
-          <ApproveButton onClick={handleApproveButtonClick}></ApproveButton>
         </>
       )
       break
@@ -120,4 +95,4 @@ const PopUp2 = (props: PopUp2Props) => {
   return <div className="bg-white rounded shadow flex flex-col">{buttons}</div>
 }
 
-export default AdminActionButton
+export default UserActionButton

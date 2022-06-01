@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from 'app/hooks'
-import OrderDetailModal from 'components/common/order-view-table/order-detail-modal'
+import OrderDetailModal from 'components/common/order-view-table/common/order-detail-modal'
 import PopUp from 'components/common/pop-up'
 import Portal from 'components/common/portal'
 import { Button } from 'components/styled'

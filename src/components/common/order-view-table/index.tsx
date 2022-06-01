@@ -1,11 +1,14 @@
 import { useAppSelector } from 'app/hooks'
 import { selectOrderList, selectStatus } from 'features/order/order-list-slice'
 import { GetAllInsuranceOrdersResponse } from 'models/api'
-import { TableEmpty, TableSpinner } from './common'
-import MainTable from './main-table'
+import { TableEmpty, TableSpinner } from './common/pure-functions'
+import { selectUserDetail } from 'features/auth/user-login-slice'
+import AdminMainTable from './admin-main-table'
+import UserMainTable from './user-main-table'
 
 const OrderViewTable = () => {
   const orderStatus = useAppSelector(selectStatus)
+  const userDetail = useAppSelector(selectUserDetail)
   const orderList = useAppSelector(
     selectOrderList
   ) as GetAllInsuranceOrdersResponse
@@ -23,8 +26,12 @@ const OrderViewTable = () => {
             {orderList.ins ? (
               orderList.ins.length === 0 ? (
                 <TableEmpty />
+              ) : userDetail.role === 'ADMIN' ? (
+                <AdminMainTable />
+              ) : userDetail.role === 'USER' ? (
+                <UserMainTable />
               ) : (
-                <MainTable />
+                <></>
               )
             ) : (
               <></>

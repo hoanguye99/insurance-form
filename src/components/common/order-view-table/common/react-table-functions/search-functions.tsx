@@ -1,7 +1,7 @@
 import { OrderStatus } from 'models/components/common'
 import React from 'react'
 import { useAsyncDebounce } from 'react-table'
-import { StatusSpan } from '../common'
+import { StatusSpan } from '../pure-functions'
 
 interface GlobalFilterType {
   preGlobalFilteredRows: any[]
