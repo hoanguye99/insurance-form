@@ -116,21 +116,21 @@ export const StatusSpan = (props: {status: OrderStatus}) => {
   switch (props.status) {
     case OrderStatus.APPROVED:
       return (
-        <div className="w-fit font-bolder p-1.5 rounded-lg text-green-500 bg-green-200">
+        <span className="w-fit font-bolder p-1.5 rounded-lg text-green-500 bg-green-200">
           Approved
-        </div>
+        </span>
       )
     case OrderStatus.PENDING:
       return (
-        <div className="w-fit font-bolder p-1.5 rounded-lg text-yellow-500 bg-yellow-50">
+        <span className="w-fit font-bolder p-1.5 rounded-lg text-yellow-500 bg-yellow-50">
           Pending
-        </div>
+        </span>
       )
     case OrderStatus.REJECTED:
       return (
-        <div className="w-fit font-bolder p-1.5 rounded-lg text-red-500 bg-red-50">
+        <span className="w-fit font-bolder p-1.5 rounded-lg text-red-500 bg-red-50">
           Rejected
-        </div>
+        </span>
       )
   }
   return null

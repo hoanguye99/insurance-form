@@ -1,4 +1,6 @@
-import { InsuranceOrder } from 'models/api'
+import { useAppSelector } from 'app/hooks'
+import { selectOrderList } from 'features/order/order-list-slice'
+import { GetAllInsuranceOrdersResponse, InsuranceOrder } from 'models/api'
 import React from 'react'
 import { Column } from 'react-table'
 import { StatusColumnFilter, TypeCodeColumnFilter } from './search-functions'
@@ -68,7 +70,7 @@ export const useOrdersColumns = () => {
         Header: 'LOẠI BẢO HIỂM',
         accessor: 'typeCode',
         Filter: TypeCodeColumnFilter,
-        filter: 'includes'
+        filter: 'includes',
       },
       {
         Header: 'TÊN CHỦ XE',
@@ -123,4 +125,70 @@ export const useOrdersColumns = () => {
   )
 
   return columns
+}
+
+export const useData = () => {
+  const orderList = useAppSelector(
+    selectOrderList
+  ) as GetAllInsuranceOrdersResponse
+
+  const data = React.useMemo(() => orderList.ins, [])
+
+  return data
+}
+
+export function getPageRange(
+  currentPage: number,
+  pageLength: number,
+  pageNum = 3
+) {
+  if (currentPage < 1) throw Error('The current Page cannot be less than 1')
+  if (currentPage > pageLength)
+    throw Error('The current Page exceeded the total page length')
+
+  const minRange = Math.floor((currentPage - 1) / pageNum) * pageNum + 1
+  const maxRange = Math.min(
+    Math.ceil(currentPage / pageNum) * pageNum,
+    pageLength
+  )
+  return [...Array(maxRange - minRange + 1)].map((x, index) => minRange + index)
+}
+
+interface PageButtonProps {
+  active: boolean
+  children: number
+  onClick: () => void
+}
+
+export const PageButton = (props: PageButtonProps) => {
+  return (
+    <button
+      className={
+        props.active
+          ? ' bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium'
+          : 'bg-white text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border border-l-0 text-sm font-medium'
+      }
+      onClick={props.onClick}
+    >
+      {props.children}
+    </button>
+  )
+}
+
+interface ControlButtonProps {
+  children: React.ReactNode
+  onClick: () => void
+  disabled: boolean
+}
+
+export const ControlButton = (props: ControlButtonProps) => {
+  return (
+    <button
+      className="relative inline-flex items-center px-2 py-2 border border-l-0 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+      onClick={props.onClick}
+      disabled={props.disabled}
+    >
+      {props.children}
+    </button>
+  )
 }
