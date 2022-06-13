@@ -37,3 +37,8 @@ export interface InsuranceOrder {
   chassisNo: string
   status: OrderStatus
 }
+
+export interface CreateGroupInsuranceOrderResponse {
+  success: CreateOrderFormData[]
+  failed: CreateOrderFormData[]
+}

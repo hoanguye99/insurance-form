@@ -3,6 +3,8 @@ import { sessionTimeoutTimerReducer } from 'features/auth/session-timeout-timer-
 import { userLoginReducer } from 'features/auth/user-login-slice'
 import counterReducer from 'features/counter/counterSlice'
 import { orderCreateReducer } from 'features/order/order-create-slice'
+import { orderGroupCreateReducer } from 'features/order/order-group-create-slice'
+import { orderGroupReducer } from 'features/order/order-group-slice'
 import { orderListReducer } from 'features/order/order-list-slice'
 import { productListReducer } from 'features/product/product-list-slice'
 
@@ -17,6 +19,8 @@ export const store = configureStore({
 
     orderList: orderListReducer,
     orderCreate: orderCreateReducer,
+    orderGroupCreate: orderGroupCreateReducer,
+    orderGroup: orderGroupReducer,
   },
 })
 

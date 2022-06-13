@@ -1,4 +1,5 @@
 import {
+  CreateGroupInsuranceOrderResponse,
   CreateOrderFormData,
   GetAllInsuranceOrdersResponse,
   InsuranceOrder,
@@ -18,6 +19,19 @@ const orderApi = {
     }
     const url = '/ins'
     return axiosClient.post(url, orderDetail, config)
+  },
+
+  createGroupInsuranceOrder(
+    groupOrder: CreateOrderFormData[],
+    userDetail: UserDetail
+  ): Promise<CreateGroupInsuranceOrderResponse> {
+    const config = {
+      headers: {
+        token: userDetail.accessToken,
+      },
+    }
+    const url = '/ins'
+    return axiosClient.post(url, groupOrder, config)
   },
 
   getAllInsuranceOrders(

@@ -56,6 +56,7 @@ export const Pagination = (props: PaginationProps) => {
         {getPageRange(props.pageIndex + 1, props.pageOptions.length).map(
           (pageNumber) => (
             <PageButton
+              key={pageNumber}
               active={pageNumber === props.pageIndex + 1}
               onClick={() => props.gotoPage(pageNumber - 1)}
             >
