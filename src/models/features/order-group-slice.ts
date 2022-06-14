@@ -2,6 +2,4 @@ import { CreateGroupInsuranceOrderResponse, CreateOrderFormData } from 'models/a
 
 export interface OrderGroupState {
   orderGroup: [] | CreateOrderFormData[]
-  status: 'idle' | 'loading' | 'failed'
-  failureDescription: string
 }

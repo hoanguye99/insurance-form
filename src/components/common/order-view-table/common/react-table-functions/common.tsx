@@ -1,8 +1,9 @@
 import { useAppSelector } from 'app/hooks'
 import { selectOrderList } from 'features/order/order-list-slice'
-import { GetAllInsuranceOrdersResponse, InsuranceOrder } from 'models/api'
+import { CreateOrderFormData, GetAllInsuranceOrdersResponse, InsuranceOrder } from 'models/api'
 import React from 'react'
 import { Column } from 'react-table'
+import ChassisColumn from './chassis-column'
 import { StatusColumnFilter, TypeCodeColumnFilter } from './search-functions'
 import StatusColumn from './status-column'
 
@@ -120,6 +121,76 @@ export const useOrdersColumns = () => {
               : String(row.values['status']) === filterValue
           }),
       },
+    ],
+    []
+  )
+
+  return columns
+}
+
+export const useGroupOrdersColumns = () => {
+  const columns = React.useMemo<readonly Column<CreateOrderFormData>[]>(
+    () => [
+      {
+        Header: 'LOẠI BẢO HIỂM',
+        accessor: 'typeCode',
+        Filter: TypeCodeColumnFilter,
+        filter: 'includes',
+      },
+      {
+        Header: 'TÊN CHỦ XE',
+        accessor: 'ownerName',
+      },
+      {
+        Header: 'ĐỊA CHỈ',
+        accessor: 'address',
+      },
+      {
+        Header: 'BIỂN SỐ',
+        accessor: 'plate',
+      },
+      {
+        Header: 'BẮT ĐẦU',
+        accessor: 'startDate',
+        sortType: (rowA, rowB, columnId, desc) => {
+          return rowB.values[columnId]
+            .split('/')
+            .reverse()
+            .join('')
+            .localeCompare(rowA.values[columnId].split('/').reverse().join(''))
+        },
+      },
+      {
+        Header: 'KẾT THÚC',
+        accessor: 'endDate',
+        sortType: (rowA, rowB, columnId) => {
+          return rowB.values[columnId]
+            .split('/')
+            .reverse()
+            .join('')
+            .localeCompare(rowA.values[columnId].split('/').reverse().join(''))
+        },
+      },
+      {
+        Header: 'SỐ MÁY',
+        accessor: 'engineNo',
+      },
+      {
+        Header: 'SỐ KHUNG',
+        accessor: 'chassisNo',
+        Cell: (props) => {
+          return <ChassisColumn {...props.row.original} />
+        },
+        Filter: StatusColumnFilter,
+        filter: (rows, columnIds, filterValue) =>
+          rows.filter((row) => {
+            return filterValue === ''
+              ? true
+              : String(row.values['status']) === filterValue
+          }),
+      },
+
+
     ],
     []
   )

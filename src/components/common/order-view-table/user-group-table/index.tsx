@@ -11,23 +11,23 @@ import {
   ArrowUp,
   ArrowUpDown,
   useData,
+  useGroupOrdersColumns,
   useOrdersColumns,
 } from '../common/react-table-functions/common'
 import React from 'react'
-import { DefaultColumnFilter, GlobalFilter } from '../common/react-table-functions/search-functions'
+import { GlobalFilter } from '../common/react-table-functions/search-functions'
 import { Pagination } from '../common/react-table-functions/paging-functions'
+import { selectOrderGroup } from 'features/order/order-group-slice'
+import { useAppSelector } from 'app/hooks'
 
-const UserMainTable = () => {
-  const data = useData()
-  const columns = useOrdersColumns()
-
-  const defaultColumn = React.useMemo(
-    () => ({
-      // Let's set up our default Filter UI
-      Filter: DefaultColumnFilter,
-    }),
-    []
+const UserGroupTable = () => {
+  const orderGroup = useAppSelector(
+    selectOrderGroup
   )
+
+  const data = React.useMemo(() => orderGroup, [])
+
+  const columns = useGroupOrdersColumns()
 
   const {
     getTableProps,
@@ -56,7 +56,6 @@ const UserMainTable = () => {
     {
       columns,
       data,
-      defaultColumn, // Search
       initialState: { pageSize: 13 }, // Paging
     },
     useFilters,
@@ -137,4 +136,4 @@ const UserMainTable = () => {
 }
 
 
-export default UserMainTable
+export default UserGroupTable

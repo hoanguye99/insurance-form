@@ -1,6 +1,3 @@
-import { useUserLogout } from 'hooks/useUserLogout'
-import React from 'react'
-import { Link } from 'react-router-dom'
 import LinkTab from './link-tab'
 
 type Props = {
@@ -36,7 +33,7 @@ const Sidebar = (props: Props) => {
               />
             ))}
 
-            <li className="block group mt-auto border-t hover:bg-gray-50">
+            <li className="block group mt-72 border-y hover:bg-gray-50">
               <button
                 onClick={props.handleLogoutButton}
                 className="inline-block w-full py-3 px-[25px]"
