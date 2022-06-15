@@ -1,7 +1,6 @@
 import styles from 'styles/components/common/order-view-table.module.scss'
 import {
-  useFilters,
-  useGlobalFilter,
+  Column,
   usePagination,
   useSortBy,
   useTable,
@@ -13,21 +12,22 @@ import {
   useData,
   useGroupOrdersColumns,
   useOrdersColumns,
+  useReviewColumns,
 } from '../common/react-table-functions/common'
 import React from 'react'
-import { GlobalFilter } from '../common/react-table-functions/search-functions'
 import { Pagination } from '../common/react-table-functions/paging-functions'
 import { selectOrderGroup } from 'features/order/order-group-slice'
 import { useAppSelector } from 'app/hooks'
+import { CreateOrderFormData } from 'models/api'
 
-const UserGroupTable = () => {
-  const orderGroup = useAppSelector(
-    selectOrderGroup
-  )
+interface ReviewTableProps {
+  data: CreateOrderFormData[]
+}
 
-  const data = React.useMemo(() => orderGroup, [orderGroup])
+const ReviewTable = (props: ReviewTableProps) => {
+  const data = React.useMemo(() => props.data, [])
 
-  const columns = useGroupOrdersColumns()
+  const columns = useReviewColumns()
 
   const {
     getTableProps,
@@ -36,12 +36,6 @@ const UserGroupTable = () => {
     // rows,
     page,
     prepareRow,
-
-    // Search
-    state,
-    visibleColumns,
-    preGlobalFilteredRows,
-    setGlobalFilter,
 
     // Paging
     canPreviousPage,
@@ -56,10 +50,8 @@ const UserGroupTable = () => {
     {
       columns,
       data,
-      initialState: { pageSize: 12 }, // Paging
+      initialState: { pageSize: 13 }, // Paging
     },
-    useFilters,
-    useGlobalFilter,
     useSortBy,
     usePagination
   )
@@ -68,15 +60,6 @@ const UserGroupTable = () => {
     <>
       <table {...getTableProps()} className={styles['main-table']}>
         <thead>
-          <tr>
-            <th colSpan={visibleColumns.length}>
-              <GlobalFilter
-                preGlobalFilteredRows={preGlobalFilteredRows}
-                globalFilter={state.globalFilter}
-                setGlobalFilter={setGlobalFilter}
-              />
-            </th>
-          </tr>
           {headerGroups.map((headerGroup) => (
             <>
               <tr
@@ -136,4 +119,4 @@ const UserGroupTable = () => {
 }
 
 
-export default UserGroupTable
+export default ReviewTable

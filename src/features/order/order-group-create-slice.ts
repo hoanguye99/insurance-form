@@ -18,17 +18,19 @@ const initialState: OrderGroupCreateState = {
 // code can then be executed and other actions can be dispatched. Thunks are
 // typically used to make async requests.
 export const createGroupOrderAsync = createAsyncThunk(
-  'orderGroupCreate/createGroupOrder',
+  'orderGroupCreate/createGroupOrderAsync',
   async (data: CreateOrderFormData[], { getState, rejectWithValue }) => {
     try {
       const userDetail = selectUserDetail(getState() as RootState)
-      data.forEach( order => {
-        order.startDate = order.startDate.split('-').join('')
-        order.endDate = order.endDate.split('-').join('')
-      })
-      const response = await orderApi.createGroupInsuranceOrder(data, userDetail)
+      const new_data = data.map( order => ({
+        ...order,
+        startDate : order.startDate.split('-').join(''),
+        endDate : order.endDate.split('-').join(''),
+      }))
+      const response = await orderApi.createGroupInsuranceOrder(new_data, userDetail)
       return response
     } catch (error) {
+      console.log(error)
       if (axios.isAxiosError(error)) {
         if (!error.response) {
           throw error

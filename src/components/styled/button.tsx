@@ -11,7 +11,7 @@ interface ButtonProps {
 export const Button = (props: ButtonProps) => {
   return (
     <button
-      type={`${props.posting ? 'button' : 'submit'}`}
+      type={`${ props.posting ? 'button' : 'submit'}`}
       onClick={props.onClick}
       className={`${props.className} ${
         props.posting ? 'cursor-not-allowed' : 'cursor-pointer'

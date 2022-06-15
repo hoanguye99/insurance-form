@@ -57,7 +57,7 @@ const AdminMainTable = () => {
       columns,
       data,
       defaultColumn, // Search
-      initialState: { pageSize: 13 }, // Paging
+      initialState: { pageSize: 12 }, // Paging
     },
     useFilters,
     useGlobalFilter,

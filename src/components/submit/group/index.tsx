@@ -1,99 +1,74 @@
 import { useAppDispatch } from 'app/hooks'
-import { createOrderGroup } from 'features/order/order-group-slice'
-import { CreateOrderFormData } from 'models/api'
-import GroupOrderTable from './group-order-table'
-import { FaFileCsv } from 'react-icons/fa'
-import { Button } from 'components/styled'
 import { useAppSelector } from 'app/hooks'
-import { selectOrderGroup } from 'features/order/order-group-slice'
+import PopUp from 'components/common/pop-up'
+import Portal from 'components/common/portal'
+import { Button } from 'components/styled'
+import { useOrderGroupCreateState } from './hooks'
+import ReviewStep from './review-step'
+import SubmitStep from './submit-step'
 
 type Props = {}
 
 const Group = (props: Props) => {
-  const orderGroup = useAppSelector(selectOrderGroup)
-
-  const dispatch = useAppDispatch()
-  function showFile(e: React.ChangeEvent<HTMLInputElement>) {
-    e.preventDefault()
-    const reader = new FileReader()
-    reader.onload = async (e) => {
-      if (e.target) {
-        const text = e.target.result
-        if (typeof text === 'string') {
-          const [header, ...fileData] = text.split(/\r?\n/)
-          const data = fileData.map((line) => {
-            const selection = line.split(';')
-            return {
-              typeCode: selection[8],
-              ownerName: selection[1],
-              address: selection[7],
-              plate: selection[2],
-              startDate: selection[3],
-              endDate: selection[4],
-              engineNo: selection[5],
-              chassisNo: selection[6],
-            } as CreateOrderFormData
-          })
-          console.log(data)
-          dispatch(createOrderGroup(data))
-        }
-        // alert(text)
-      }
-    }
-    if (e && e.target && e.target.files) {
-      reader.readAsText(e.target.files[0])
-    }
-  }
+  const {
+    orderGroupCreateResponse,
+    posting,
+    showErrorModal,
+    closeErrorModal,
+    failureDescription,
+  } = useOrderGroupCreateState()
 
   return (
-    <div className="bg-[#f3f4f6]">
-      <div className="container mx-auto">
-        <p className="text-2xl font-['Muli-ExtraBold'] text-gray-900 mt-5 mb-10">
-          Đăng kí nhóm
-        </p>
-        <div className="flex gap-8 mb-6">
-          <div className="flex flex-col items-center gap-2">
-            <p className="mb-2 text-sm font-medium text-gray-900">
-              Download file mẫu:
-            </p>
-            <a
-              className="w-8 h-8 text-blue-500"
-              href="/group-insurance-form.csv"
-              download
-            >
-              <FaFileCsv size={32} />
-            </a>
-          </div>
+    <>
+      {showErrorModal && (
+        <Portal>
+          <PopUp onClickOutside={() => {}}>
+            <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white animate-popup rounded max-w-md w-full">
+              <div className="flex flex-col p-6 gap-12">
+                <p className="mx-auto text-red-600">{failureDescription}</p>
+                <div className="flex justify-between items-center">
+                  <Button
+                    onClick={() => closeErrorModal()}
+                    className="w-fit bg-gray-600 hover:bg-gray-500 focus:bg-gray-400 focus:ring-gray-300"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M7 16l-4-4m0 0l4-4m-4 4h18"
+                      />
+                    </svg>
+                  </Button>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+          </PopUp>
+        </Portal>
+      )}
 
-          <div>
-            <label
-              className="block mb-2 text-sm font-medium text-gray-900"
-              htmlFor="file_input"
-            >
-              Tải file CSV
-            </label>
-            <input
-              className="block w-full text-sm px-3 py-1.5 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
-              aria-describedby="file_input_help"
-              id="file_input"
-              type="file"
-              onChange={(e) => showFile(e)}
-              accept=".csv"
-            />
-          </div>
+      <div className="bg-[#f3f4f6]">
+        <div className="container mx-auto">
+          <p className="text-2xl font-['Muli-ExtraBold'] text-gray-900 mt-5 mb-10">
+            Đăng kí nhóm
+          </p>
+          {orderGroupCreateResponse === undefined ? (
+            <SubmitStep posting={posting}></SubmitStep>
+          ) : (
+            <ReviewStep
+              orderGroupCreateResponse={orderGroupCreateResponse}
+            ></ReviewStep>
+          )}
         </div>
-
-        <GroupOrderTable></GroupOrderTable>
-
-        {orderGroup.length !== 0 && (
-          <div className="mt-8 flex justify-end">
-            <Button className="w-fit" posting={false}>
-              Gửi
-            </Button>
-          </div>
-        )}
       </div>
-    </div>
+    </>
   )
 }
 

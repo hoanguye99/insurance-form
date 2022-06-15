@@ -6,9 +6,12 @@ import PopUpButton from '../../pop-up-button'
 import PopUp from 'components/common/pop-up'
 import {
   ActionButton,
+  DeleteButton,
   EditButton,
 } from '../common/pure-functions'
 import OrderEditModal from './order-edit-modal'
+import { useAppDispatch } from 'app/hooks'
+import { deleteOrderGroup } from 'features/order/order-group-slice'
 
 const UserActionButton = (props: CreateOrderFormData) => {
   const [showPopUp, setShowPopUp] = useState<ShowPopUp>({
@@ -33,8 +36,8 @@ const UserActionButton = (props: CreateOrderFormData) => {
 
       {showDetailModal && (
         <Portal>
-          <PopUp onClickOutside={() => setShowDetailModal(false)}>
-            <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white animate-popup rounded max-w-md w-full">
+          <PopUp onClickOutside={() => {}}>
+            <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white animate-popup rounded max-w-lg w-full">
               <OrderEditModal
                 onExit={() => setShowDetailModal(false)}
                 {...props}
@@ -53,14 +56,23 @@ interface PopUp2Props extends CreateOrderFormData {
 }
 
 const PopUp2 = (props: PopUp2Props) => {
+  const dispatch = useAppDispatch()
+
   function handleEditButtonClick() {
     props.setShowPopUp({ status: 0, style: {} })
     props.setShowDetailModal(true)
   }
 
+  function handleDeleteButtonClick() {
+    props.setShowPopUp({ status: 0, style: {} })
+    dispatch(deleteOrderGroup(props.plate))
+  }
+
   return (
     <div className="bg-white rounded shadow flex flex-col">
       <EditButton onClick={handleEditButtonClick}></EditButton>
+      <DeleteButton onClick={handleDeleteButtonClick}></DeleteButton>
+
     </div>
   )
 }

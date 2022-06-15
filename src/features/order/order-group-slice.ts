@@ -22,27 +22,43 @@ function handleResetAction(state: OrderGroupState) {
   state.orderGroup = []
 }
 
-function handleCreateAction(state : OrderGroupState, action: PayloadAction<CreateOrderFormData[]>) {
+function handleCreateAction(
+  state: OrderGroupState,
+  action: PayloadAction<CreateOrderFormData[]>
+) {
   state.orderGroup = action.payload
 }
 
-interface GroupUpdateActionProp {
-  index: number
-  value: CreateOrderFormData
+
+function handleUpdateAction(
+  state: OrderGroupState,
+  action: PayloadAction<CreateOrderFormData>
+) {
+  const order = action.payload
+  state.orderGroup = state.orderGroup.map((row) => {
+    if (row.plate === order.plate) {
+      return order
+    }
+    return row
+  })
 }
 
-function handleUpdateAction(state : OrderGroupState, action: PayloadAction<GroupUpdateActionProp>) {
-  const {index, value} = action.payload
-  state.orderGroup[index] = value
+function handleDeleteAction(
+  state: OrderGroupState,
+  action: PayloadAction<string>
+) {
+  const plate = action.payload
+  state.orderGroup = state.orderGroup.filter((row) => row.plate !== plate)
 }
 
-function handleDeleteAction(state : OrderGroupState, action: PayloadAction<number>) {
-  const index = action.payload
-  state.orderGroup.splice(index, 1);
-}
+export const {
+  resetOrderGroup,
+  createOrderGroup,
+  updateOrderGroup,
+  deleteOrderGroup,
+} = orderGroupSlice.actions
 
-export const { resetOrderGroup, createOrderGroup, updateOrderGroup, deleteOrderGroup } = orderGroupSlice.actions
-
-export const selectOrderGroup = (state: RootState) => state.orderGroup.orderGroup
+export const selectOrderGroup = (state: RootState) =>
+  state.orderGroup.orderGroup
 
 export const orderGroupReducer = orderGroupSlice.reducer

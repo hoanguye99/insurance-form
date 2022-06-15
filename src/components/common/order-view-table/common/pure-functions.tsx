@@ -47,6 +47,17 @@ export const EditButton = (props: { onClick: () => void }) => {
   )
 }
 
+export const DeleteButton = (props: { onClick: () => void }) => {
+  return (
+    <button
+      onClick={props.onClick}
+      className="flex items-center gap-3 w-52 text-left p-3 text-base font-extrabold text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+    >
+      Xóa
+    </button>
+  )
+}
+
 export const ApproveButton = (props: { onClick: () => void }) => {
   return (
     <button

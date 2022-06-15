@@ -25,7 +25,10 @@ const OrderDetailModal = (props: OrderDetailModalProps) => {
       </div>
       <div className="flex justify-between">
         <div className="flex flex-col gap-3">
-          <ItemSection label="Account Mail" value={props.userName}></ItemSection>
+          <ItemSection
+            label="Account Mail"
+            value={props.userName}
+          ></ItemSection>
           <ItemSection label="Chủ xe" value={props.ownerName}></ItemSection>
           <ItemSection label="Địa chỉ" value={props.address}></ItemSection>
           <ItemSection label="Tổng tiền" value="25.000đ"></ItemSection>
@@ -173,7 +176,25 @@ const ActionButtons = (props: ActionButtonsProps) => {
     } else {
       buttons = (
         <>
-          <Button onClick={handleBackButtonClick}>Quay lại</Button>
+          <Button
+            onClick={handleBackButtonClick}
+            className="w-fit bg-gray-600 hover:bg-gray-500 focus:bg-gray-400 focus:ring-gray-300"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M7 16l-4-4m0 0l4-4m-4 4h18"
+              />
+            </svg>
+          </Button>
           <Button onClick={handleOrdersButtonClick}>Đơn hàng</Button>
         </>
       )
