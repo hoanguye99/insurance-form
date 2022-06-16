@@ -3,7 +3,6 @@ import OrderDetailModal from 'components/common/order-view-table/common/order-de
 import PopUp from 'components/common/pop-up'
 import Portal from 'components/common/portal'
 import { Button } from 'components/styled'
-import FormHeader from 'components/submit/individual/form-header'
 import { createOrderAsync } from 'features/order/order-create-slice'
 import {
   getAllProductTypesAsync,
@@ -106,43 +105,24 @@ const Individual = (props: IndividualProps) => {
             Đăng kí cá nhân
           </p>
           <form onSubmit={handleSubmit(handleFormSubmit)}>
-            <Section
-              className="pt-0"
-              header={<FormHeader header="Thông tin xe và chủ xe" extra="" />}
-            >
+            <Section className="pt-0">
               <VehicleOwnerForm register={register} />
             </Section>
 
             <Separator />
 
-            <Section
-              header={
-                <FormHeader
-                  header="Thời hạn hiệu lực của giấy CNBH"
-                  extra="(365 ngày bao gồm cả ngày bắt đầu và ngày kết thúc)"
-                />
-              }
-            >
+            <Section>
               <VehicleInfoForm register={register} />
             </Section>
 
             <Separator />
 
-            <Section
-              header={
-                <FormHeader
-                  header="Loại hình bảo hiểm đăng ký và phí"
-                  extra=""
-                />
-              }
-            >
+            <Section>
               <OptionForm register={register} />
             </Section>
 
-            <Separator />
-
-            <Section className="pt-0" header={<></>}>
-              <div className="flex justify-end">
+            <Section>
+              <div className="flex justify-end pt-7">
                 <Button className="w-fit" posting={posting}>
                   Gửi
                 </Button>

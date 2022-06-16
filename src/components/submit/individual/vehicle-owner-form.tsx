@@ -12,6 +12,9 @@ const VehicleOwnerForm = (props: VehicleOwnerFormProps) => {
   return (
     <div className="shadow overflow-hidden sm:rounded-md">
       <div className="px-4 py-5 bg-white sm:p-6">
+
+        <p className="text-base font-['Muli-ExtraBold'] text-gray-900 mb-6">Thông tin xe và chủ xe</p>
+
         <div className="grid grid-cols-6 gap-6 gap-y-4">
 
           <div className="col-span-6 sm:col-span-3">

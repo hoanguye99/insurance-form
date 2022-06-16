@@ -19,9 +19,8 @@ const OptionForm = (props: OptionFormProps) => {
     productList.insTypes && (
       <div className="shadow overflow-hidden sm:rounded-md">
         <div className="px-4 py-5 bg-white sm:p-6">
-          <legend className="text-base font-medium text-gray-900">
-            Loại hình bảo hiểm
-          </legend>
+
+        <p className="text-base font-['Muli-ExtraBold'] text-gray-900 mb-6">Loại hình bảo hiểm</p>
 
           <div className="mt-4 flex flex-col">
             {productList.insTypes.map((item) => (

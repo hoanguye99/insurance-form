@@ -11,6 +11,7 @@ import Orders from 'components/orders'
 import { AdminLayout } from 'components/layout/admin'
 import { useRefreshToken } from 'hooks/useRefreshToken'
 import ScrollToTop from 'components/common/scroll-to-top'
+import ImageUpload from 'components/submit/image-upload'
 
 function App() {
   const userDetail = useAppSelector(selectUserDetail)
@@ -36,6 +37,7 @@ function App() {
               />
               <Route path="individual" element={<Individual />} />
               <Route path="group" element={<Group />} />
+              <Route path="image-upload" element={<ImageUpload />} />
             </Route>
             <Route path="orders" element={<MainLayout />}>
               <Route index element={<Orders />} />
