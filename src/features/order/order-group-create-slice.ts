@@ -5,6 +5,7 @@ import orderApi from 'api/order-api'
 import { selectUserDetail } from 'features/auth/user-login-slice'
 import { CreateOrderFormData } from 'models/api'
 import { OrderGroupCreateState } from 'models/features'
+import { validateToken } from 'features/validateToken'
 
 const initialState: OrderGroupCreateState = {
   orderGroupCreateResponse: undefined,
@@ -19,9 +20,10 @@ const initialState: OrderGroupCreateState = {
 // typically used to make async requests.
 export const createGroupOrderAsync = createAsyncThunk(
   'orderGroupCreate/createGroupOrderAsync',
-  async (data: CreateOrderFormData[], { getState, rejectWithValue }) => {
+  async (data: CreateOrderFormData[], {dispatch, getState, rejectWithValue }) => {
     try {
       const userDetail = selectUserDetail(getState() as RootState)
+      validateToken(userDetail, dispatch)
       const new_data = data.map( order => ({
         ...order,
         startDate : order.startDate.split('-').join(''),
@@ -39,7 +41,7 @@ export const createGroupOrderAsync = createAsyncThunk(
       } else {
         // do something else
         // or creating a new error
-        throw new Error('different error than axios')
+        throw error
       }
     }
   }

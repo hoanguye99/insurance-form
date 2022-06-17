@@ -5,6 +5,7 @@ import orderApi from 'api/order-api'
 import { selectUserDetail } from 'features/auth/user-login-slice'
 import { CreateOrderError, CreateOrderFormData } from 'models/api'
 import { OrderCreateState } from 'models/features'
+import { validateToken } from 'features/validateToken'
 
 const initialState: OrderCreateState = {
   orderCreateResponse: {},
@@ -19,9 +20,10 @@ const initialState: OrderCreateState = {
 // typically used to make async requests.
 export const createOrderAsync = createAsyncThunk(
   'orderCreate/createOrder',
-  async (data: CreateOrderFormData, { getState, rejectWithValue }) => {
+  async (data: CreateOrderFormData, {dispatch, getState, rejectWithValue }) => {
     try {
       const userDetail = selectUserDetail(getState() as RootState)
+      validateToken(userDetail, dispatch)
       data.startDate = data.startDate.split('-').join('')
       data.endDate = data.endDate.split('-').join('')
       const response = await orderApi.createInsuranceOrder(data, userDetail)
@@ -35,7 +37,7 @@ export const createOrderAsync = createAsyncThunk(
       } else {
         // do something else
         // or creating a new error
-        throw new Error('different error than axios')
+        throw error
       }
     }
   }

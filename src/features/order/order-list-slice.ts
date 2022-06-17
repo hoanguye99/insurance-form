@@ -3,7 +3,8 @@ import { RootState } from 'app/store'
 import axios from 'axios'
 import {OrderListState } from 'models/features'
 import orderApi from 'api/order-api'
-import { selectUserDetail } from 'features/auth/user-login-slice'
+import { refreshToken, selectUserDetail } from 'features/auth/user-login-slice'
+import { validateToken } from 'features/validateToken'
 
 const initialState: OrderListState = {
   orderList: localStorage.getItem('orderList')
@@ -20,10 +21,11 @@ const initialState: OrderListState = {
 // typically used to make async requests.
 export const getAllOrdersAsync = createAsyncThunk(
   'orderList/getAllOrders',
-  async (data, {getState, rejectWithValue }) => {
+  async (data, {dispatch, getState, rejectWithValue }) => {
     try {
       // console.log('calling get orders')
       const userDetail = selectUserDetail(getState() as RootState)
+      validateToken(userDetail, dispatch)
       const response = await orderApi.getAllInsuranceOrders(userDetail)
       localStorage.setItem('orderList', JSON.stringify(response))
       return response
@@ -35,9 +37,7 @@ export const getAllOrdersAsync = createAsyncThunk(
 
         return rejectWithValue(error.response.data)
       } else {
-        // do something else
-        // or creating a new error
-        throw new Error('different error than axios')
+        throw error
       }
     }
   }
