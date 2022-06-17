@@ -50,7 +50,7 @@ const SubmitStep = (props: SubmitStepProps) => {
 
   return (
     <>
-      <div className="flex gap-8 mb-6">
+      <div className="flex justify-center items-center gap-8 mb-6">
         <div className="flex flex-col items-center gap-2">
           <p className="mb-2 text-sm font-medium text-gray-900">
             Download file mẫu:

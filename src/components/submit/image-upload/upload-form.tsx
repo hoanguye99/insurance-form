@@ -1,14 +1,16 @@
-import { useAppDispatch, useAppSelector } from "app/hooks"
-import { useState } from "react"
+import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { useState } from 'react'
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 type UploadFormProps = {}
 
 const UploadForm = (props: UploadFormProps) => {
-
+  const [image, setImage] = useState<File | undefined>(undefined)
+  const imageLoaded = image !== undefined
   // const imageUploadStatus = useAppSelector(selectStatus)
   // const imageUploadResponse = useAppSelector(selectImageUploadResponse)
 
-  // imageUploadResponse === undefined => <></>
   // imageUploadStatus === loading => Spinner
   // imageUploadResponse === {} => STM
 
@@ -16,23 +18,13 @@ const UploadForm = (props: UploadFormProps) => {
 
   function showFile(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault()
-    const reader = new FileReader()
-    reader.onload = async (e) => {
-      if (e.target) {
-        const text = e.target.result
-        console.log(text);
-        // dispatch(createOrderGroup(data))
-      }
-    }
     if (e && e.target && e.target.files) {
-      reader.readAsText(e.target.files[0])
+      setImage(e.target.files[0])
     }
   }
 
-
   return (
-    <div>
-
+    <div className="flex flex-col sm:flex-row items-center justify-center sm:divide-x gap-3">
       <div>
         <label
           className="block mb-2 text-sm font-medium text-gray-900"
@@ -41,7 +33,7 @@ const UploadForm = (props: UploadFormProps) => {
           Tải ảnh giấy đăng kí xe
         </label>
         <input
-          className="block w-full text-sm px-3 py-1.5 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
+          className="block text-sm px-3 py-1.5 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
           aria-describedby="file_input_help"
           id="file_input"
           type="file"
@@ -50,6 +42,17 @@ const UploadForm = (props: UploadFormProps) => {
         />
       </div>
 
+      {imageLoaded ? (
+        <Zoom>
+          <img
+            className="pl-3 sm:max-h-32 sm:max-w-fit"
+            src={URL.createObjectURL(image)}
+            alt=""
+          />
+        </Zoom>
+      ) : (
+        <></>
+      )}
     </div>
   )
 }
