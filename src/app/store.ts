@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import { sessionTimeoutTimerReducer } from 'features/auth/session-timeout-timer-slice'
 import { userLoginReducer } from 'features/auth/user-login-slice'
 import counterReducer from 'features/counter/counterSlice'
+import { imageUploadReducer } from 'features/image/image-upload-slice'
 import { orderCreateReducer } from 'features/order/order-create-slice'
 import { orderGroupCreateReducer } from 'features/order/order-group-create-slice'
 import { orderGroupReducer } from 'features/order/order-group-slice'
@@ -16,6 +17,7 @@ export const store = configureStore({
 
     productList: productListReducer,
 
+    imageUpload: imageUploadReducer,
 
     orderList: orderListReducer,
     orderCreate: orderCreateReducer,

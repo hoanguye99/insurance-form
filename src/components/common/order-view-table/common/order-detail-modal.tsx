@@ -6,7 +6,6 @@ import { selectOrderCreateResponse } from 'features/order/order-create-slice'
 import { getAllOrdersAsync } from 'features/order/order-list-slice'
 import { InsuranceOrder } from 'models/api'
 import { OrderStatus } from 'models/components/common'
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 interface OrderDetailModalProps extends InsuranceOrder {
@@ -129,7 +128,7 @@ const ActionButtons = (props: ActionButtonsProps) => {
 
   function handleBackButtonClick() {
     props.onExit()
-    navigate('/submit/individual')
+    // navigate('/submit/individual')
   }
 
   function handleOrdersButtonClick() {

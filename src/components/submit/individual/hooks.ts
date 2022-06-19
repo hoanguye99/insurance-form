@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { resetImageUpload } from 'features/image/image-upload-slice'
 import {
   resetOrderCreate,
   selectFailureDescription,
@@ -31,12 +32,14 @@ export const useCreateOrderState = (reset : UseFormReset<CreateOrderFormData>) =
 
   function closeDetailModal() {
     dispatch(resetOrderCreate())
+    dispatch(resetImageUpload())
     setShowDetailModal(false)
     reset()
   }
-
+  
   function closeErrorModal() {
     dispatch(resetOrderCreate())
+    dispatch(resetImageUpload())
     setShowErrorModal(false)
   }
 

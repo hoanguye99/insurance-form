@@ -1,12 +1,14 @@
-import { LoginRequest, LoginResponse, RefreshTokenResponse } from 'models/api';
-import { UserDetail } from 'models/features';
-import axiosClient from './axios-client';
+import { ImageUploadResponse } from 'models/api'
+import { UserDetail } from 'models/features'
+import imageUploadClient from './image-upload-client'
 
 const imageUploadApi = {
-  upload(data: LoginRequest): Promise<LoginResponse> {
-    const url = '/ins-upload/?detectPlate=1';
-    return axiosClient.post(url, data);
+  upload(file: File): Promise<ImageUploadResponse> {
+    const formData = new FormData()
+    formData.append('file', file)
+    const url = '/ins-upload/?detectPlate=1'
+    return imageUploadClient.post(url, formData)
   },
-};
+}
 
-export default imageUploadApi;
+export default imageUploadApi

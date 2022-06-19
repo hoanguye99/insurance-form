@@ -1,4 +1,5 @@
 import { Footer } from 'components/footer'
+import { useGetAllProductTypes } from 'hooks/useGetAllProductTypes'
 import { useUserLogout } from 'hooks/useUserLogout'
 import { useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
@@ -8,6 +9,7 @@ import Sidebar from '../common/side-bar'
 export const MainLayout = () => {
   const location = useLocation()
   const { handleLogoutButton } = useUserLogout()
+  useGetAllProductTypes()
   const data = [
     {
       link: '/about',
