@@ -1,4 +1,4 @@
-import {useAppSelector } from 'app/hooks'
+import { useAppSelector } from 'app/hooks'
 import {
   selectFailureDescription,
   selectImageUploadResponse,
@@ -15,7 +15,11 @@ const ImageFormWrapper = () => {
   const imageReady = imageUploadResponse !== undefined
 
   if (imageReady) {
-    return <ImageForm data={imageUploadResponse}></ImageForm>
+    if ('errorMessage' in imageUploadResponse) {
+      return <div className="">{imageUploadResponse.errorMessage}</div>
+    } else {
+      return <ImageForm data={imageUploadResponse}></ImageForm>
+    }
   } else if (imageUploadStatus === 'failed') {
     return (
       <div>

@@ -1,7 +1,7 @@
 
 export type ImageUploadResponse = ImageUploadResponseSuccess | ImageUploadResponseFailed
 
-interface ImageUploadResponseSuccess {
+export interface ImageUploadResponseSuccess {
   errorCode: 0
   info: {
     name: string
@@ -27,7 +27,7 @@ interface ImageUploadResponseSuccess {
   image: string
 }
 
-interface ImageUploadResponseFailed {
+export interface ImageUploadResponseFailed {
   errorCode: number
   errorMessage: string
   image: string

@@ -1,7 +1,7 @@
 import { useAppDispatch } from 'app/hooks'
 import { Button } from 'components/styled'
 import { createOrderAsync } from 'features/order/order-create-slice'
-import { CreateOrderFormData, ImageUploadResponse } from 'models/api'
+import { CreateOrderFormData, ImageUploadResponse, ImageUploadResponseSuccess } from 'models/api'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Section, Separator } from '../common'
@@ -12,13 +12,10 @@ import VehicleInfoForm from '../individual/vehicle-info-form'
 import VehicleOwnerForm from '../individual/vehicle-owner-form'
 
 interface ImageFormProps {
-  data: ImageUploadResponse
+  data: ImageUploadResponseSuccess
 }
 
 const ImageForm = (props: ImageFormProps) => {
-  if ('errorMessage' in props.data) {
-    return <div className="">{props.data.errorMessage}</div>
-  }
   const dispatch = useAppDispatch()
 
   const {

@@ -304,9 +304,8 @@ interface ControlButtonProps {
 export const ControlButton = (props: ControlButtonProps) => {
   return (
     <button
-      className="relative inline-flex items-center px-2 py-2 border border-l-0 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+      className={`${props.disabled ? "hidden" : ""} relative inline-flex items-center px-2 py-2 border border-l-0 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50`}
       onClick={props.onClick}
-      disabled={props.disabled}
     >
       {props.children}
     </button>
