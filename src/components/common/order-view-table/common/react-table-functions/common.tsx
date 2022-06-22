@@ -4,6 +4,8 @@ import { CreateOrderFormData, GetAllInsuranceOrdersResponse, InsuranceOrder } fr
 import React from 'react'
 import { Column } from 'react-table'
 import ChassisColumn from './chassis-column'
+import PriceColumn from './price-column'
+import ProductTypeColumn from './product-type-column'
 import { StatusColumnFilter, TypeCodeColumnFilter } from './search-functions'
 import StatusColumn from './status-column'
 
@@ -71,10 +73,7 @@ export const useUserOrdersColumns = () => {
         Header: 'LOẠI BẢO HIỂM',
         accessor: 'typeCode',
         Cell: (props) => {
-          
-          return <div>
-            <p>{props.row.original.typeCode}</p>
-          </div>
+          return <ProductTypeColumn typeCode={props.row.original.typeCode}></ProductTypeColumn>
         },
       },
       {
@@ -108,18 +107,11 @@ export const useUserOrdersColumns = () => {
         },
       },
       {
-        Header: 'TRẠNG THÁI',
+        Header: 'GIÁ TIỀN',
         accessor: 'status',
         Cell: (props) => {
-          return <StatusColumn {...props.row.original} />
+          return <PriceColumn {...props.row.original} />
         },
-        Filter: StatusColumnFilter,
-        filter: (rows, columnIds, filterValue) =>
-          rows.filter((row) => {
-            return filterValue === ''
-              ? true
-              : String(row.values['status']) === filterValue
-          }),
       },
     ],
     []

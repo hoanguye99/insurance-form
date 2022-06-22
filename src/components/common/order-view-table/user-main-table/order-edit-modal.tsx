@@ -1,7 +1,9 @@
+import orderApi from 'api/order-api'
 import { useAppDispatch, useAppSelector } from 'app/hooks'
-import { updateOrderGroup } from 'features/order/order-group-slice'
+import { selectUserDetail } from 'features/auth/user-login-slice'
+import { getAllOrdersAsync } from 'features/order/order-list-slice'
 import { selectProductList } from 'features/product/product-list-slice'
-import { CreateOrderFormData, GetAllProductTypeResponse } from 'models/api'
+import { InsuranceOrder } from 'models/api'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import {
   ActionButtons,
@@ -9,21 +11,19 @@ import {
   ItemSection,
 } from '../common/pure-functions'
 
-interface OrderEditModalProps extends CreateOrderFormData {
+interface OrderEditModalProps extends InsuranceOrder {
   onExit: () => void
 }
 
 const OrderEditModal = (props: OrderEditModalProps) => {
-  const productList = useAppSelector(
-    selectProductList
-  ) as GetAllProductTypeResponse
   const dispatch = useAppDispatch()
-
+  const userDetail = useAppSelector(selectUserDetail)
+  const productList = useAppSelector(selectProductList)
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateOrderFormData>({
+  } = useForm<InsuranceOrder>({
     defaultValues: {
       typeCode: props.typeCode,
       ownerName: props.ownerName,
@@ -36,9 +36,25 @@ const OrderEditModal = (props: OrderEditModalProps) => {
     },
   })
 
-  const handleFormSubmit: SubmitHandler<CreateOrderFormData> = async (data) => {
-    dispatch(updateOrderGroup(data))
-    props.onExit()
+  const handleFormSubmit: SubmitHandler<InsuranceOrder> = async (data) => {
+    try {
+      props.onExit()
+      if ('insTypes' in productList) {
+        productList.insTypes.forEach((item) => {
+          if (item.name === data.typeCode) {
+            data.typeCode = item.code
+          }
+        })
+      }
+      const response = await orderApi.updateInsuranceOrder(
+        props.id,
+        data,
+        userDetail
+      )
+      dispatch(getAllOrdersAsync())
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -47,12 +63,12 @@ const OrderEditModal = (props: OrderEditModalProps) => {
         <EditFormHeader />
         <div className="flex justify-between gap-5">
           <div className="flex flex-col gap-3">
-            <ItemSection<CreateOrderFormData>
+            <ItemSection<InsuranceOrder>
               label="Chủ xe"
               register={register}
               formLabel="ownerName"
             ></ItemSection>
-            <ItemSection<CreateOrderFormData>
+            <ItemSection<InsuranceOrder>
               type="date"
               label="Ngày bắt đầu CNBH"
               register={register}
@@ -74,33 +90,33 @@ const OrderEditModal = (props: OrderEditModalProps) => {
                 ))}
               </select>
             </div>
-
-            <ItemSection<CreateOrderFormData>
+            */}
+            <ItemSection<InsuranceOrder>
               label="Biển số"
               register={register}
               formLabel="plate"
-            ></ItemSection> */}
-            <ItemSection<CreateOrderFormData>
+            ></ItemSection>
+            <ItemSection<InsuranceOrder>
               label="Số khung"
               register={register}
               formLabel="chassisNo"
             ></ItemSection>
           </div>
           <div className="flex flex-col gap-3 items-end text-right">
-            <ItemSection<CreateOrderFormData>
+            <ItemSection<InsuranceOrder>
               label="Địa chỉ"
               register={register}
               formLabel="address"
             ></ItemSection>
 
-            <ItemSection<CreateOrderFormData>
+            <ItemSection<InsuranceOrder>
               type="date"
               label="Ngày kết thúc CNBH"
               register={register}
               formLabel="endDate"
             ></ItemSection>
 
-            <ItemSection<CreateOrderFormData>
+            <ItemSection<InsuranceOrder>
               label="Số máy"
               register={register}
               formLabel="engineNo"

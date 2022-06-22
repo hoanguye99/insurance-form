@@ -12,9 +12,7 @@ import PopUp from 'components/common/pop-up'
 import OrderDetailModal from '../common/order-detail-modal'
 import {
   ActionButton,
-  ApproveButton,
-  DetailButton,
-  RejectButton,
+  OptionButton,
 } from '../common/pure-functions'
 
 const AdminActionButton = (props: InsuranceOrder) => {
@@ -66,7 +64,7 @@ const PopUp2 = (props: PopUp2Props) => {
     try {
       props.setShowPopUp({ status: 0, style: {} })
       const data = await orderApi.approveInsuranceOrder(props.id, userDetail)
-      console.log(data)
+      // console.log(data)
       dispatch(getAllOrdersAsync())
     } catch (error) {
       console.log(error)
@@ -77,7 +75,7 @@ const PopUp2 = (props: PopUp2Props) => {
     try {
       props.setShowPopUp({ status: 0, style: {} })
       const data = await orderApi.rejectInsuranceOrder(props.id, userDetail)
-      console.log(data)
+      // console.log(data)
       dispatch(getAllOrdersAsync())
     } catch (error) {
       console.log(error)
@@ -94,25 +92,25 @@ const PopUp2 = (props: PopUp2Props) => {
     case OrderStatus.APPROVED:
       buttons = (
         <>
-          <DetailButton onClick={handleDetailButtonClick}></DetailButton>
-          <RejectButton onClick={handleRejectButtonClick}></RejectButton>
+          <OptionButton onClick={handleDetailButtonClick}>Thông tin xhi tiết</OptionButton>
+          <OptionButton onClick={handleRejectButtonClick}>Hủy</OptionButton>
         </>
       )
       break
     case OrderStatus.PENDING:
       buttons = (
         <>
-          <DetailButton onClick={handleDetailButtonClick}></DetailButton>
-          <ApproveButton onClick={handleApproveButtonClick}></ApproveButton>
-          <RejectButton onClick={handleRejectButtonClick}></RejectButton>
+          <OptionButton onClick={handleDetailButtonClick}>Thông tin chi tiết</OptionButton>
+          <OptionButton onClick={handleApproveButtonClick}>Duyệt</OptionButton>
+          <OptionButton onClick={handleRejectButtonClick}>Hủy</OptionButton>
         </>
       )
       break
     case OrderStatus.REJECTED:
       buttons = (
         <>
-          <DetailButton onClick={handleDetailButtonClick}></DetailButton>
-          <ApproveButton onClick={handleApproveButtonClick}></ApproveButton>
+          <OptionButton onClick={handleDetailButtonClick}>Thông tin chi tiết</OptionButton>
+          <OptionButton onClick={handleApproveButtonClick}>Duyệt</OptionButton>
         </>
       )
       break

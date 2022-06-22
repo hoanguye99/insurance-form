@@ -12,4 +12,5 @@ export interface ProductType {
   name: string
   description: string
   totalAmount: string
+  image: string
 }

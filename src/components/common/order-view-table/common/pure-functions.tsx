@@ -1,4 +1,6 @@
+import { Button } from 'components/styled'
 import { OrderStatus } from 'models/components/common'
+import { Path, UseFormRegister } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import table_empty from 'utils/assets/images/table_empty.jpg'
 
@@ -23,37 +25,19 @@ export const ActionButton = () => {
   )
 }
 
-export const DetailButton = (props: { onClick: () => void }) => {
-  return (
-    <button
-      onClick={props.onClick}
-      className="flex items-center gap-3 w-52 text-left p-3 text-base font-extrabold text-gray-500 hover:text-gray-800 hover:bg-gray-100"
-    >
-      {/* <div className="h-3 w-3 rounded-full bg-white hover:bg-gray-100"></div> */}
-      Thông tin chi tiết
-    </button>
-  )
+
+interface OptionButtonProps {
+  onClick: () => void
+  children: React.ReactNode
 }
 
-export const EditButton = (props: { onClick: () => void }) => {
+export const OptionButton = (props: OptionButtonProps) => {
   return (
     <button
       onClick={props.onClick}
       className="flex items-center gap-3 w-52 text-left p-3 text-base font-extrabold text-gray-500 hover:text-gray-800 hover:bg-gray-100"
     >
-      {/* <div className="h-3 w-3 rounded-full bg-white hover:bg-gray-100"></div> */}
-      Chỉnh sửa thông tin
-    </button>
-  )
-}
-
-export const DeleteButton = (props: { onClick: () => void }) => {
-  return (
-    <button
-      onClick={props.onClick}
-      className="flex items-center gap-3 w-52 text-left p-3 text-base font-extrabold text-gray-500 hover:text-gray-800 hover:bg-gray-100"
-    >
-      Xóa
+      {props.children}
     </button>
   )
 }
@@ -145,4 +129,84 @@ export const StatusSpan = (props: {status: OrderStatus}) => {
       )
   }
   return null
+}
+
+interface ItemSectionProps<T> {
+  type?: string
+  label: string
+  register: UseFormRegister<T>
+  formLabel: Path<T>
+}
+
+export function ItemSection<T>(props: ItemSectionProps<T>) {
+  return (
+    <div className="flex flex-col gap-0 w-full">
+      <label className="uppercase text-gray-700 opacity-70 font-['Muli-ExtraBold'] text-xs">
+        {props.label}
+      </label>
+      <input
+        type={props.type}
+        {...props.register(props.formLabel, { required: true })}
+        className="h-[48px] block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+      />
+    </div>
+  )
+}
+
+interface ActionButtonsProps {
+  onExit: () => void
+}
+export const ActionButtons = (props: ActionButtonsProps) => {
+  function handleBackButtonClick() {
+    props.onExit()
+  }
+
+  return (
+    <div className="mt-12 flex justify-between items-center">
+      <Button
+        onClick={handleBackButtonClick}
+        className="w-fit bg-gray-600 hover:bg-gray-500 focus:bg-gray-400 focus:ring-gray-300"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M7 16l-4-4m0 0l4-4m-4 4h18"
+          />
+        </svg>
+      </Button>
+      <Button>Sửa</Button>
+    </div>
+  )
+}
+
+export const EditFormHeader = () => {
+  return (
+    <div className="pt-1 pb-14 flex justify-center items-center gap-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-7 w-7 text-gray-400"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth={2}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+        />
+      </svg>
+      <div className="font-['Muli-ExtraBold'] font-thin text-2xl">
+        Chỉnh sửa
+      </div>
+    </div>
+  )
 }

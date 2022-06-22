@@ -57,7 +57,7 @@ const UserMainTable = () => {
       columns,
       data,
       defaultColumn, // Search
-      initialState: { pageSize: 12 }, // Paging
+      initialState: { pageSize: 8 }, // Paging
     },
     useFilters,
     useGlobalFilter,

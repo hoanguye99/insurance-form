@@ -6,8 +6,7 @@ import PopUpButton from '../../pop-up-button'
 import PopUp from 'components/common/pop-up'
 import {
   ActionButton,
-  DeleteButton,
-  EditButton,
+  OptionButton,
 } from '../common/pure-functions'
 import OrderEditModal from './order-edit-modal'
 import { useAppDispatch } from 'app/hooks'
@@ -70,8 +69,8 @@ const PopUp2 = (props: PopUp2Props) => {
 
   return (
     <div className="bg-white rounded shadow flex flex-col">
-      <EditButton onClick={handleEditButtonClick}></EditButton>
-      <DeleteButton onClick={handleDeleteButtonClick}></DeleteButton>
+      <OptionButton onClick={handleEditButtonClick}>Chỉnh sửa</OptionButton>
+      <OptionButton onClick={handleDeleteButtonClick}>Xóa</OptionButton>
 
     </div>
   )

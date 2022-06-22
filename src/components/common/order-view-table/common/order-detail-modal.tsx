@@ -104,7 +104,7 @@ const ActionButtons = (props: ActionButtonsProps) => {
     try {
       props.onExit()
       const data = await orderApi.approveInsuranceOrder(props.id, userDetail)
-      console.log(data)
+      // console.log(data)
       dispatch(getAllOrdersAsync())
     } catch (error) {
       console.log(error)
@@ -115,7 +115,7 @@ const ActionButtons = (props: ActionButtonsProps) => {
     try {
       props.onExit()
       const data = await orderApi.rejectInsuranceOrder(props.id, userDetail)
-      console.log(data)
+      // console.log(data)
       dispatch(getAllOrdersAsync())
     } catch (error) {
       console.log(error)
