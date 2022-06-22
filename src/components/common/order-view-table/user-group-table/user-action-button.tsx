@@ -18,7 +18,7 @@ const UserActionButton = (props: CreateOrderFormData) => {
     status: 0,
     style: {},
   })
-  const [showDetailModal, setShowDetailModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
   return (
     <>
       <PopUpButton
@@ -29,17 +29,17 @@ const UserActionButton = (props: CreateOrderFormData) => {
           <PopUp2
             {...props}
             setShowPopUp={setShowPopUp}
-            setShowDetailModal={setShowDetailModal}
+            setShowEditModal={setShowEditModal}
           />
         }
       />
 
-      {showDetailModal && (
+      {showEditModal && (
         <Portal>
           <PopUp onClickOutside={() => {}}>
             <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white animate-popup rounded max-w-lg w-full">
               <OrderEditModal
-                onExit={() => setShowDetailModal(false)}
+                onExit={() => setShowEditModal(false)}
                 {...props}
               ></OrderEditModal>
             </div>
@@ -52,7 +52,7 @@ const UserActionButton = (props: CreateOrderFormData) => {
 
 interface PopUp2Props extends CreateOrderFormData {
   setShowPopUp: React.Dispatch<React.SetStateAction<ShowPopUp>>
-  setShowDetailModal: React.Dispatch<React.SetStateAction<boolean>>
+  setShowEditModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const PopUp2 = (props: PopUp2Props) => {
@@ -60,7 +60,7 @@ const PopUp2 = (props: PopUp2Props) => {
 
   function handleEditButtonClick() {
     props.setShowPopUp({ status: 0, style: {} })
-    props.setShowDetailModal(true)
+    props.setShowEditModal(true)
   }
 
   function handleDeleteButtonClick() {

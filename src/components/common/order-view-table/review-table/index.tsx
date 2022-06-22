@@ -1,24 +1,17 @@
-import styles from 'styles/components/common/order-view-table.module.scss'
+import { CreateOrderFormData } from 'models/api'
+import React from 'react'
 import {
-  Column,
   usePagination,
   useSortBy,
-  useTable,
+  useTable
 } from 'react-table'
+import styles from 'styles/components/common/order-view-table.module.scss'
 import {
   ArrowDown,
   ArrowUp,
-  ArrowUpDown,
-  useData,
-  useGroupOrdersColumns,
-  useOrdersColumns,
-  useReviewColumns,
+  ArrowUpDown, useReviewColumns
 } from '../common/react-table-functions/common'
-import React from 'react'
 import { Pagination } from '../common/react-table-functions/paging-functions'
-import { selectOrderGroup } from 'features/order/order-group-slice'
-import { useAppSelector } from 'app/hooks'
-import { CreateOrderFormData } from 'models/api'
 
 interface ReviewTableProps {
   data: CreateOrderFormData[]

@@ -11,7 +11,7 @@ import {
   ArrowUp,
   ArrowUpDown,
   useData,
-  useOrdersColumns,
+  useUserOrdersColumns,
 } from '../common/react-table-functions/common'
 import React from 'react'
 import { DefaultColumnFilter, GlobalFilter } from '../common/react-table-functions/search-functions'
@@ -19,7 +19,7 @@ import { Pagination } from '../common/react-table-functions/paging-functions'
 
 const UserMainTable = () => {
   const data = useData()
-  const columns = useOrdersColumns()
+  const columns = useUserOrdersColumns()
 
   const defaultColumn = React.useMemo(
     () => ({

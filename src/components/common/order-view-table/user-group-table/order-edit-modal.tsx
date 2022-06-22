@@ -33,7 +33,6 @@ const OrderEditModal = (props: OrderEditModalProps) => {
     },
   })
 
-
   const handleFormSubmit: SubmitHandler<CreateOrderFormData> = async (data) => {
     dispatch(updateOrderGroup(data))
     props.onExit()
@@ -69,12 +68,13 @@ const OrderEditModal = (props: OrderEditModalProps) => {
               formLabel="ownerName"
             ></ItemSection>
             <ItemSection<CreateOrderFormData>
-              label="Địa chỉ"
+              type="date"
+              label="Ngày bắt đầu CNBH"
               register={register}
-              formLabel="address"
+              formLabel="startDate"
             ></ItemSection>
 
-            <div className="flex flex-col gap-0 w-full">
+            {/* <div className="flex flex-col gap-0 w-full">
               <label className="uppercase text-gray-700 opacity-70 font-['Muli-ExtraBold'] text-xs">
                 Loại bảo hiểm
               </label>
@@ -94,26 +94,27 @@ const OrderEditModal = (props: OrderEditModalProps) => {
               label="Biển số"
               register={register}
               formLabel="plate"
+            ></ItemSection> */}
+            <ItemSection<CreateOrderFormData>
+              label="Số khung"
+              register={register}
+              formLabel="chassisNo"
             ></ItemSection>
           </div>
           <div className="flex flex-col gap-3 items-end text-right">
             <ItemSection<CreateOrderFormData>
-              type="date"
-              label="Ngày bắt đầu CNBH"
+              label="Địa chỉ"
               register={register}
-              formLabel="startDate"
+              formLabel="address"
             ></ItemSection>
+
             <ItemSection<CreateOrderFormData>
               type="date"
               label="Ngày kết thúc CNBH"
               register={register}
               formLabel="endDate"
             ></ItemSection>
-            <ItemSection<CreateOrderFormData>
-              label="Số khung"
-              register={register}
-              formLabel="chassisNo"
-            ></ItemSection>
+
             <ItemSection<CreateOrderFormData>
               label="Số máy"
               register={register}

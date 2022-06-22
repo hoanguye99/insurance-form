@@ -1,24 +1,21 @@
-import styles from 'styles/components/common/order-view-table.module.scss'
+import { useAppSelector } from 'app/hooks'
+import { selectOrderGroup } from 'features/order/order-group-slice'
+import React from 'react'
 import {
   useFilters,
   useGlobalFilter,
   usePagination,
   useSortBy,
-  useTable,
+  useTable
 } from 'react-table'
+import styles from 'styles/components/common/order-view-table.module.scss'
 import {
   ArrowDown,
   ArrowUp,
-  ArrowUpDown,
-  useData,
-  useGroupOrdersColumns,
-  useOrdersColumns,
+  ArrowUpDown, useGroupOrdersColumns
 } from '../common/react-table-functions/common'
-import React from 'react'
-import { GlobalFilter } from '../common/react-table-functions/search-functions'
 import { Pagination } from '../common/react-table-functions/paging-functions'
-import { selectOrderGroup } from 'features/order/order-group-slice'
-import { useAppSelector } from 'app/hooks'
+import { GlobalFilter } from '../common/react-table-functions/search-functions'
 
 const UserGroupTable = () => {
   const orderGroup = useAppSelector(

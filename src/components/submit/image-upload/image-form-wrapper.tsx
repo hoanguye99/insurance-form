@@ -30,7 +30,7 @@ const ImageFormWrapper = () => {
   } else if (imageLoading) {
     return <Spinner />
   } else {
-    return <div>Upload a different Picture</div>
+    return <div>Upload a different picture</div>
   }
 }
 

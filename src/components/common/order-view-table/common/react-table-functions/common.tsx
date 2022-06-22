@@ -64,7 +64,71 @@ export const ArrowUpDown = () => {
   )
 }
 
-export const useOrdersColumns = () => {
+export const useUserOrdersColumns = () => {
+  const columns = React.useMemo<readonly Column<InsuranceOrder>[]>(
+    () => [
+      {
+        Header: 'LOẠI BẢO HIỂM',
+        accessor: 'typeCode',
+        Cell: (props) => {
+          
+          return <div>
+            <p>{props.row.original.typeCode}</p>
+          </div>
+        },
+      },
+      {
+        Header: 'TÊN CHỦ XE',
+        accessor: 'ownerName',
+      },
+      {
+        Header: 'BIỂN SỐ',
+        accessor: 'plate',
+      },
+      {
+        Header: 'BẮT ĐẦU',
+        accessor: 'startDate',
+        sortType: (rowA, rowB, columnId, desc) => {
+          return rowB.values[columnId]
+            .split('/')
+            .reverse()
+            .join('')
+            .localeCompare(rowA.values[columnId].split('/').reverse().join(''))
+        },
+      },
+      {
+        Header: 'KẾT THÚC',
+        accessor: 'endDate',
+        sortType: (rowA, rowB, columnId) => {
+          return rowB.values[columnId]
+            .split('/')
+            .reverse()
+            .join('')
+            .localeCompare(rowA.values[columnId].split('/').reverse().join(''))
+        },
+      },
+      {
+        Header: 'TRẠNG THÁI',
+        accessor: 'status',
+        Cell: (props) => {
+          return <StatusColumn {...props.row.original} />
+        },
+        Filter: StatusColumnFilter,
+        filter: (rows, columnIds, filterValue) =>
+          rows.filter((row) => {
+            return filterValue === ''
+              ? true
+              : String(row.values['status']) === filterValue
+          }),
+      },
+    ],
+    []
+  )
+
+  return columns
+}
+
+export const useAdminOrdersColumns = () => {
   const columns = React.useMemo<readonly Column<InsuranceOrder>[]>(
     () => [
       {

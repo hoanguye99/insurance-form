@@ -66,6 +66,20 @@ const orderApi = {
     const url = `/ins/${id}`
     return axiosClient.delete(url, config)
   },
+
+  updateInsuranceOrder(
+    id: string,
+    orderDetail: CreateOrderFormData,
+    userDetail: UserDetail
+  ): Promise<any> {
+    const config = {
+      headers: {
+        token: userDetail.accessToken,
+      },
+    }
+    const url = `/ins/${id}`
+    return axiosClient.put(url, orderDetail, config)
+  },
 }
 
 export default orderApi
