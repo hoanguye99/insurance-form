@@ -10,12 +10,16 @@ import React, { useState } from 'react'
 import PopUpButton from '../../pop-up-button'
 import PopUp from 'components/common/pop-up'
 import OrderDetailModal from '../common/order-detail-modal'
-import { ActionButton, CartStatusPopup, OptionButton } from '../common/pure-functions'
+import {
+  ActionButton,
+  CartStatusPopup,
+  OptionButton,
+} from '../common/pure-functions'
 import OrderEditModal from './order-edit-modal'
 import {
   getCartAsync,
   selectCart,
-  selectStatus,
+  selectCartStatus,
 } from 'features/cart/cart-get-slice'
 import cartApi from 'api/cart-api'
 
@@ -29,6 +33,13 @@ const UserActionButton = (props: InsuranceOrder) => {
   const [showCartStatus, setShowCartStatus] = useState<string | null>(null)
   return (
     <>
+      {showCartStatus !== null && (
+        <CartStatusPopup
+          showCartStatus={showCartStatus}
+          setShowCartStatus={setShowCartStatus}
+        ></CartStatusPopup>
+      )}
+      
       <PopUpButton
         showPopUp={showPopUp}
         setShowPopUp={setShowPopUp}
@@ -70,10 +81,6 @@ const UserActionButton = (props: InsuranceOrder) => {
           </PopUp>
         </Portal>
       )}
-
-      {showCartStatus !== null && (
-        <CartStatusPopup showCartStatus={showCartStatus} setShowCartStatus={setShowCartStatus}></CartStatusPopup>
-      )}
     </>
   )
 }
@@ -88,7 +95,7 @@ interface PopUp2Props extends InsuranceOrder {
 const PopUp2 = (props: PopUp2Props) => {
   const userDetail = useAppSelector(selectUserDetail)
   const cart = useAppSelector(selectCart)
-  const cartStatus = useAppSelector(selectStatus)
+  const cartStatus = useAppSelector(selectCartStatus)
   const dispatch = useAppDispatch()
 
   async function handleAddToCartButtonClick() {

@@ -1,10 +1,18 @@
-import { useAppSelector } from 'app/hooks'
-import { selectOrderList } from 'features/order/order-list-slice'
-import { CreateOrderFormData, GetAllInsuranceOrdersResponse, InsuranceOrder } from 'models/api'
+import cartApi from 'api/cart-api'
+import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { selectUserDetail } from 'features/auth/user-login-slice'
+import { getCartAsync, selectCart, selectCartStatus } from 'features/cart/cart-get-slice'
+import { selectOrderList, selectStatus } from 'features/order/order-list-slice'
+import {
+  CreateOrderFormData,
+  GetAllInsuranceOrdersResponse,
+  GetLatestCartDetailResponse,
+  InsuranceOrder,
+} from 'models/api'
 import React from 'react'
 import { Column } from 'react-table'
 import ChassisColumn from './chassis-column'
-import PriceColumn from './price-column'
+import EndDateColumn from './end-date-column'
 import ProductTypeColumn from './product-type-column'
 import { StatusColumnFilter, TypeCodeColumnFilter } from './search-functions'
 import StatusColumn from './status-column'
@@ -73,7 +81,11 @@ export const useUserOrdersColumns = () => {
         Header: 'LOẠI BẢO HIỂM',
         accessor: 'typeCode',
         Cell: (props) => {
-          return <ProductTypeColumn typeCode={props.row.original.typeCode}></ProductTypeColumn>
+          return (
+            <ProductTypeColumn
+              typeCode={props.row.original.typeCode}
+            ></ProductTypeColumn>
+          )
         },
       },
       {
@@ -105,12 +117,8 @@ export const useUserOrdersColumns = () => {
             .join('')
             .localeCompare(rowA.values[columnId].split('/').reverse().join(''))
         },
-      },
-      {
-        Header: 'GIÁ TIỀN',
-        accessor: 'status',
         Cell: (props) => {
-          return <PriceColumn {...props.row.original} />
+          return <EndDateColumn {...props.row.original} />
         },
       },
     ],
@@ -303,6 +311,80 @@ export const useReviewColumns = () => {
   return columns
 }
 
+interface CartItem {
+  id: string
+  typeCode: string
+  plate: string
+  duration: number
+  amount: string
+}
+
+export const useCartColumns = () => {
+  const columns = React.useMemo<readonly Column<CartItem>[]>(
+    () => [
+      {
+        Header: 'LOẠI BẢO HIỂM',
+        accessor: 'typeCode',
+        Cell: (props) => {
+          return (
+            <ProductTypeColumn
+              typeCode={props.row.original.typeCode}
+            ></ProductTypeColumn>
+          )
+        },
+      },
+      {
+        Header: 'BIỂN SỐ',
+        accessor: 'plate',
+      },
+      {
+        Header: 'THỜI HẠN',
+        accessor: 'duration',
+        Cell: (props) => <div>{props.row.original.duration} ngày</div>
+      },
+      {
+        Header: 'GIÁ TIỀN',
+        accessor: 'amount',
+        Cell: (props) => {
+          const userDetail = useAppSelector(selectUserDetail)
+          const dispatch = useAppDispatch()
+          const formatter = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+          });
+          return (
+            <div className="flex justify-between items-center !pr-3">
+              <span className="font-extrabold text-blue-400">{formatter.format(Number(props.row.original.amount))}</span>
+              <button onClick={async () => {
+                await cartApi.deleteCartItem(userDetail, props.row.original.id)
+                dispatch(getCartAsync())
+              }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-gray-500 transition-all duration-150 hover:text-red-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+          )
+        },
+      },
+    ],
+    []
+  )
+
+  return columns
+}
+
 export const useData = () => {
   const orderList = useAppSelector(
     selectOrderList
@@ -311,6 +393,39 @@ export const useData = () => {
   const data = React.useMemo(() => orderList.ins, [])
 
   return data
+}
+
+export const useCartData = () => {
+  const cart = useAppSelector(selectCart) as GetLatestCartDetailResponse
+  const orderList = useAppSelector(
+    selectOrderList
+  ) as GetAllInsuranceOrdersResponse
+  const cartStatus = useAppSelector(selectCartStatus)
+  const orderStatus = useAppSelector(selectStatus)
+  
+  if(cartStatus !== 'idle' || orderStatus !== 'idle') {
+    return []
+  }
+
+  const data = cart.details.map((item) => {
+    const order = orderList.ins.find((obj) => obj.id === item.insId)
+    if (order) {
+      return {
+        id: item.id,
+        typeCode: order.typeCode,
+        plate: order.plate,
+        duration:
+          Math.abs(
+            new Date(order.endDate.split('/').reverse().join('-')).getTime() -
+              new Date(order.startDate.split('/').reverse().join('-')).getTime()
+          ) /
+          (1000 * 60 * 60 * 24),
+        amount: item.amount,
+      }
+    }
+  })
+
+  return data as CartItem[]
 }
 
 export function getPageRange(
@@ -360,7 +475,9 @@ interface ControlButtonProps {
 export const ControlButton = (props: ControlButtonProps) => {
   return (
     <button
-      className={`${props.disabled ? "hidden" : ""} relative inline-flex items-center px-2 py-2 border border-l-0 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50`}
+      className={`${
+        props.disabled ? 'hidden' : ''
+      } relative inline-flex items-center px-2 py-2 border border-l-0 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50`}
       onClick={props.onClick}
     >
       {props.children}

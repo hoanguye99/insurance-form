@@ -2,8 +2,6 @@ import { AddCartResponse, CreateCartResponse, GetLatestCartDetailResponse } from
 import { UserDetail } from "models/features"
 import axiosClient from "./axios-client"
 
-
-
 const cartApi = {
 
   createCart(userDetail: UserDetail, insId: string, amount: number): Promise<CreateCartResponse> {

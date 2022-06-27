@@ -7,10 +7,8 @@ import { refreshToken, selectUserDetail } from 'features/auth/user-login-slice'
 import { validateToken } from 'features/validateToken'
 
 const initialState: OrderListState = {
-  orderList: localStorage.getItem('orderList')
-    ? JSON.parse(localStorage.getItem('orderList')!)
-    : {},
-  status: 'idle',
+  orderList: {},
+  status: 'init',
   failureDescription: ''
 }
 
@@ -27,7 +25,6 @@ export const getAllOrdersAsync = createAsyncThunk(
       const userDetail = selectUserDetail(getState() as RootState)
       validateToken(userDetail, dispatch)
       const response = await orderApi.getAllInsuranceOrders(userDetail)
-      localStorage.setItem('orderList', JSON.stringify(response))
       return response
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -78,9 +75,8 @@ const orderListSlice = createSlice({
 })
 
 function handleResetAction(state: OrderListState) {
-  localStorage.removeItem('orderList')
   state.orderList = {}
-  state.status = 'idle'
+  state.status = 'init'
   state.failureDescription = ''
 }
 

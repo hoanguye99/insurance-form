@@ -9,7 +9,7 @@ import { validateToken } from 'features/validateToken'
 
 const initialState: OrderCreateState = {
   orderCreateResponse: {},
-  status: 'idle',
+  status: 'init',
   failureDescription: '',
 }
 
@@ -79,7 +79,7 @@ const orderCreateSlice = createSlice({
 
 function handleResetAction(state: OrderCreateState) {
   state.orderCreateResponse = {}
-  state.status = 'idle'
+  state.status = 'init'
   state.failureDescription = ''
 }
 

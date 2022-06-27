@@ -8,7 +8,7 @@ import { validateToken } from 'features/validateToken'
 
 const initialState: CartGetState = {
   cart: undefined,
-  status: 'idle',
+  status: 'init',
   failureDescription: ''
 }
 
@@ -75,14 +75,14 @@ const cartGetSlice = createSlice({
 
 function handleResetAction(state: CartGetState) {
   state.cart = undefined
-  state.status = 'idle'
+  state.status = 'init'
   state.failureDescription = ''
 }
 
 export const { resetCartGet } = cartGetSlice.actions
 
 export const selectCart = (state: RootState) => state.cartGet.cart
-export const selectStatus = (state: RootState) => state.cartGet.status
+export const selectCartStatus = (state: RootState) => state.cartGet.status
 export const selectFailureDescription = (state: RootState) =>
   state.cartGet.failureDescription
 

@@ -4,9 +4,9 @@ import { InsuranceOrder } from 'models/api'
 import AdminActionButton from '../../admin-main-table/admin-action-button'
 import UserActionButton from '../../user-main-table/user-action-button'
 
-interface PriceColumnProps extends InsuranceOrder {}
+interface EndDateColumnProps extends InsuranceOrder {}
 
-const PriceColumn = (props: PriceColumnProps) => {
+const EndDateColumn = (props: EndDateColumnProps) => {
   const userDetail = useAppSelector(selectUserDetail)
 
   let actionButton
@@ -21,10 +21,10 @@ const PriceColumn = (props: PriceColumnProps) => {
 
   return (
     <div className="flex justify-between items-center !pr-3">
-      <span>25.000đ</span>
+      <p>{props.endDate}</p>
       {actionButton}
     </div>
   )
 }
 
-export default PriceColumn
+export default EndDateColumn
