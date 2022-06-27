@@ -22,7 +22,7 @@ const cartApi = {
         token: userDetail.accessToken,
       }
     }
-    const url = `/ins/order${orderId}`
+    const url = `/ins/order/${orderId}`
     return axiosClient.put(url, {insId, amount}, config)
   },
 

@@ -10,12 +10,13 @@ import React, { useState } from 'react'
 import PopUpButton from '../../pop-up-button'
 import PopUp from 'components/common/pop-up'
 import OrderDetailModal from '../common/order-detail-modal'
-import {
-  ActionButton,
-  OptionButton,
-} from '../common/pure-functions'
+import { ActionButton, CartStatusPopup, OptionButton } from '../common/pure-functions'
 import OrderEditModal from './order-edit-modal'
-import { getCartAsync, selectCart, selectStatus } from 'features/cart/cart-get-slice'
+import {
+  getCartAsync,
+  selectCart,
+  selectStatus,
+} from 'features/cart/cart-get-slice'
 import cartApi from 'api/cart-api'
 
 const UserActionButton = (props: InsuranceOrder) => {
@@ -25,6 +26,7 @@ const UserActionButton = (props: InsuranceOrder) => {
   })
   const [showDetailModal, setShowDetailModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
+  const [showCartStatus, setShowCartStatus] = useState<string | null>(null)
   return (
     <>
       <PopUpButton
@@ -37,6 +39,7 @@ const UserActionButton = (props: InsuranceOrder) => {
             setShowPopUp={setShowPopUp}
             setShowDetailModal={setShowDetailModal}
             setShowEditModal={setShowEditModal}
+            setShowCartStatus={setShowCartStatus}
           />
         }
       />
@@ -67,6 +70,10 @@ const UserActionButton = (props: InsuranceOrder) => {
           </PopUp>
         </Portal>
       )}
+
+      {showCartStatus !== null && (
+        <CartStatusPopup showCartStatus={showCartStatus} setShowCartStatus={setShowCartStatus}></CartStatusPopup>
+      )}
     </>
   )
 }
@@ -75,6 +82,7 @@ interface PopUp2Props extends InsuranceOrder {
   setShowPopUp: React.Dispatch<React.SetStateAction<ShowPopUp>>
   setShowDetailModal: React.Dispatch<React.SetStateAction<boolean>>
   setShowEditModal: React.Dispatch<React.SetStateAction<boolean>>
+  setShowCartStatus: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 const PopUp2 = (props: PopUp2Props) => {
@@ -84,17 +92,20 @@ const PopUp2 = (props: PopUp2Props) => {
   const dispatch = useAppDispatch()
 
   async function handleAddToCartButtonClick() {
-    try{
+    try {
       props.setShowPopUp({ status: 0, style: {} })
       if (cart === undefined) {
         await cartApi.createCart(userDetail, props.id, 25000)
       } else {
         await cartApi.addCart(userDetail, props.id, 25000, cart.orderId)
       }
+      props.setShowCartStatus('Sản phẩm đã được thêm vào Giỏ hàng')
+      setTimeout(() => props.setShowCartStatus(null), 4000)
       // console.log(data)
       dispatch(getCartAsync())
-    } catch(error) {
-      console.log(error)
+    } catch (error) {
+      props.setShowCartStatus((error as Object).toString())
+      setTimeout(() => props.setShowCartStatus(null), 4000)
     }
   }
 
@@ -128,17 +139,30 @@ const PopUp2 = (props: PopUp2Props) => {
     case OrderStatus.APPROVED:
       buttons = (
         <>
-          <OptionButton onClick={handleDetailButtonClick}>Thông tin chi tiết</OptionButton>
+          <OptionButton onClick={handleDetailButtonClick}>
+            Thông tin chi tiết
+          </OptionButton>
         </>
       )
       break
     case OrderStatus.PENDING:
       buttons = (
         <>
-          <OptionButton loading={cartStatus === 'loading'} onClick={handleAddToCartButtonClick}>Thêm vào giỏ hàng</OptionButton>
-          <OptionButton onClick={handlePurchaseButtonClick}>Mua ngay</OptionButton>
-          <OptionButton onClick={handleDetailButtonClick}>Thông tin chi tiết</OptionButton>
-          <OptionButton onClick={handleEditButtonClick}>Chỉnh sửa thông tin</OptionButton>
+          <OptionButton
+            loading={cartStatus === 'loading'}
+            onClick={handleAddToCartButtonClick}
+          >
+            Thêm vào giỏ hàng
+          </OptionButton>
+          <OptionButton onClick={handlePurchaseButtonClick}>
+            Mua ngay
+          </OptionButton>
+          <OptionButton onClick={handleDetailButtonClick}>
+            Thông tin chi tiết
+          </OptionButton>
+          <OptionButton onClick={handleEditButtonClick}>
+            Chỉnh sửa thông tin
+          </OptionButton>
           <OptionButton onClick={handleDeleteButtonClick}>Xóa</OptionButton>
         </>
       )
@@ -146,7 +170,9 @@ const PopUp2 = (props: PopUp2Props) => {
     case OrderStatus.REJECTED:
       buttons = (
         <>
-          <OptionButton onClick={handleDetailButtonClick}>Thông tin chi tiết</OptionButton>
+          <OptionButton onClick={handleDetailButtonClick}>
+            Thông tin chi tiết
+          </OptionButton>
         </>
       )
       break

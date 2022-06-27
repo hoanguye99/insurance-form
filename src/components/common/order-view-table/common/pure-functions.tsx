@@ -1,3 +1,4 @@
+import PopUp from 'components/common/pop-up'
 import { Button } from 'components/styled'
 import { OrderStatus } from 'models/components/common'
 import { Path, UseFormRegister } from 'react-hook-form'
@@ -24,7 +25,6 @@ export const ActionButton = () => {
     </button>
   )
 }
-
 
 interface OptionButtonProps {
   onClick: () => void
@@ -101,15 +101,21 @@ export const TableEmpty = () => {
         Bạn hiện chưa có đơn hàng nào!
       </p>
       <p className="text-center font-thin text-xl">
-        Nhấn vào 
-        <Link to="/submit/individual" className="text-blue-500 hover:text-blue-700 transition-all duration-75"> đây </Link>
+        Nhấn vào
+        <Link
+          to="/submit/individual"
+          className="text-blue-500 hover:text-blue-700 transition-all duration-75"
+        >
+          {' '}
+          đây{' '}
+        </Link>
         để tạo mới
       </p>
     </div>
   )
 }
 
-export const StatusSpan = (props: {status: OrderStatus}) => {
+export const StatusSpan = (props: { status: OrderStatus }) => {
   switch (props.status) {
     case OrderStatus.APPROVED:
       return (
@@ -210,5 +216,38 @@ export const EditFormHeader = () => {
         Chỉnh sửa
       </div>
     </div>
+  )
+}
+
+interface CartStatusPopupProps {
+  showCartStatus: string | null
+  setShowCartStatus: React.Dispatch<React.SetStateAction<string | null>>
+}
+
+export const CartStatusPopup = (props: CartStatusPopupProps) => {
+  return (
+    <PopUp onClickOutside={() => props.setShowCartStatus(null)}>
+      <div className="z-20 fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-600 bg-opacity-70 rounded max-w-md w-full">
+        <div className="flex flex-col justify-center items-center gap-12 my-14">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-16 w-16 text-white bg-green-500 rounded-full border-0"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+          <p className="text-center text-white font-['Muli-ExtraBold'] font-light text-lg">
+            {props.showCartStatus}
+          </p>
+        </div>
+      </div>
+    </PopUp>
   )
 }

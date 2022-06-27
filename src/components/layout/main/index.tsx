@@ -1,15 +1,21 @@
+import { useAppDispatch } from 'app/hooks'
 import { Footer } from 'components/footer'
+import { getCartAsync } from 'features/cart/cart-get-slice'
 import { useGetAllProductTypes } from 'hooks/useGetAllProductTypes'
 import { useUserLogout } from 'hooks/useUserLogout'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Header from '../common/header'
 import Sidebar from '../common/side-bar'
 
 export const MainLayout = () => {
   const location = useLocation()
+  const dispatch = useAppDispatch()
   const { handleLogoutButton } = useUserLogout()
   useGetAllProductTypes()
+  useEffect(() => {
+    dispatch(getCartAsync())
+  }, [])
   const data = [
     {
       link: '/about',
