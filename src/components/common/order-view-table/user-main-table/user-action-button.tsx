@@ -15,6 +15,8 @@ import {
   OptionButton,
 } from '../common/pure-functions'
 import OrderEditModal from './order-edit-modal'
+import { getCartAsync, selectCart, selectStatus } from 'features/cart/cart-get-slice'
+import cartApi from 'api/cart-api'
 
 const UserActionButton = (props: InsuranceOrder) => {
   const [showPopUp, setShowPopUp] = useState<ShowPopUp>({
@@ -77,10 +79,23 @@ interface PopUp2Props extends InsuranceOrder {
 
 const PopUp2 = (props: PopUp2Props) => {
   const userDetail = useAppSelector(selectUserDetail)
+  const cart = useAppSelector(selectCart)
+  const cartStatus = useAppSelector(selectStatus)
   const dispatch = useAppDispatch()
 
-  function handleAddToCartButtonClick() {
-    props.setShowPopUp({ status: 0, style: {} })
+  async function handleAddToCartButtonClick() {
+    try{
+      props.setShowPopUp({ status: 0, style: {} })
+      if (cart === undefined) {
+        await cartApi.createCart(userDetail, props.id, 25000)
+      } else {
+        await cartApi.addCart(userDetail, props.id, 25000, cart.orderId)
+      }
+      // console.log(data)
+      dispatch(getCartAsync())
+    } catch(error) {
+      console.log(error)
+    }
   }
 
   function handlePurchaseButtonClick() {
@@ -120,7 +135,7 @@ const PopUp2 = (props: PopUp2Props) => {
     case OrderStatus.PENDING:
       buttons = (
         <>
-          <OptionButton onClick={handleAddToCartButtonClick}>Thêm vào giỏ hàng</OptionButton>
+          <OptionButton loading={cartStatus === 'loading'} onClick={handleAddToCartButtonClick}>Thêm vào giỏ hàng</OptionButton>
           <OptionButton onClick={handlePurchaseButtonClick}>Mua ngay</OptionButton>
           <OptionButton onClick={handleDetailButtonClick}>Thông tin chi tiết</OptionButton>
           <OptionButton onClick={handleEditButtonClick}>Chỉnh sửa thông tin</OptionButton>

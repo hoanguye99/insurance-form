@@ -29,6 +29,7 @@ export const ActionButton = () => {
 interface OptionButtonProps {
   onClick: () => void
   children: React.ReactNode
+  loading?: boolean
 }
 
 export const OptionButton = (props: OptionButtonProps) => {
@@ -36,6 +37,7 @@ export const OptionButton = (props: OptionButtonProps) => {
     <button
       onClick={props.onClick}
       className="flex items-center gap-3 w-52 text-left p-3 text-base font-extrabold text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+      disabled={props.loading}
     >
       {props.children}
     </button>
