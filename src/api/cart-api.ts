@@ -1,4 +1,4 @@
-import { AddCartResponse, CreateCartResponse, GetLatestCartDetailResponse } from "models/api"
+import { AddCartResponse, ConfirmCartResponse, CreateCartResponse, GetLatestCartDetailResponse } from "models/api"
 import { UserDetail } from "models/features"
 import axiosClient from "./axios-client"
 
@@ -56,6 +56,18 @@ const cartApi = {
     return axiosClient.get(url, config)
   },
 
+  confirmCart(
+    userDetail: UserDetail,
+    orderId: string
+  ): Promise<ConfirmCartResponse> {
+    const config = {
+      headers: {
+        token: userDetail.accessToken,
+      }
+    }
+    const url = `/ins/order/confirm/${orderId}`
+    return axiosClient.post(url, {}, config)
+  },
 }
 
 export default cartApi

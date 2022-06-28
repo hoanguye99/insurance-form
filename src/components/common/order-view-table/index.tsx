@@ -5,6 +5,7 @@ interface OrderViewTableProps {
   loadingStatus: 'loading' | 'idle' | 'failed' | 'init'
   isTableEmpty: boolean
   TableEmpty: React.ReactNode
+  TableError?: React.ReactNode
 }
 
 const OrderViewTable = (props: OrderViewTableProps) => {
@@ -20,7 +21,7 @@ const OrderViewTable = (props: OrderViewTableProps) => {
         <>{props.children}</>
       )
     default:
-      return <div>An error happened</div>
+      return <>{props.TableError || <p>An error has occured</p>}</>
   }
 }
 

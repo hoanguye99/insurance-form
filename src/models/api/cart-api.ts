@@ -27,3 +27,10 @@ interface CartItemResponse {
   insId: string
   amount: string
 }
+
+export interface ConfirmCartResponse {
+  invoiceId: string
+  orderId: string
+  invoiceCode: string
+  amount: string
+}

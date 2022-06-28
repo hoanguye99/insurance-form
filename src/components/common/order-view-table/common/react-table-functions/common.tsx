@@ -355,7 +355,7 @@ export const useCartColumns = () => {
           return (
             <div className="flex justify-between items-center !pr-3">
               <span className="font-extrabold text-blue-400">{formatter.format(Number(props.row.original.amount))}</span>
-              <button onClick={async () => {
+              <button title="Xóa" onClick={async () => {
                 await cartApi.deleteCartItem(userDetail, props.row.original.id)
                 dispatch(getCartAsync())
               }}>

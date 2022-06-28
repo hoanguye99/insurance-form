@@ -1,28 +1,37 @@
-import { useAppSelector } from 'app/hooks'
-import OrderViewTable from 'components/common/order-view-table'
-import CartTable from 'components/common/order-view-table/cart-table'
-import { TableEmpty } from 'components/common/order-view-table/common/pure-functions'
-import { selectCart, selectCartStatus } from 'features/cart/cart-get-slice'
+import { ErrorModal } from 'components/submit/individual'
+import { useCartConfirmState } from './hook'
+import PaymentPage from './payment-page'
+import ReviewPage from './review-page'
 
 const Cart = () => {
-  const cartStatus = useAppSelector(selectCartStatus)
-  const cart = useAppSelector(selectCart)
-
+  const {
+    cartConfirmResponse,
+    posting,
+    showErrorModal,
+    closeErrorModal,
+    failureDescription,
+  } = useCartConfirmState()
   return (
-    <div className="container mx-auto">
-      <p className="text-2xl font-['Muli-ExtraBold'] text-gray-900 mt-5 mb-10">
-        Giỏ hàng
-      </p>
-      <div className="overflow-x-auto">
-        <OrderViewTable
-          loadingStatus={cartStatus}
-          isTableEmpty={cart !== undefined && cart.details.length === 0}
-          TableEmpty={<TableEmpty />}
-        >
-          <CartTable />
-        </OrderViewTable>
+    <>
+      {showErrorModal && (
+        <ErrorModal
+          failureDescription={failureDescription}
+          closeErrorModal={closeErrorModal}
+        ></ErrorModal>
+      )}
+      <div className="container mx-auto">
+        <p className="text-2xl font-['Muli-ExtraBold'] text-gray-900 mt-5 mb-10">
+          Giỏ hàng
+        </p>
+        {cartConfirmResponse === undefined ? (
+            <ReviewPage posting={posting}></ReviewPage>
+          ) : (
+            <PaymentPage
+              cartConfirmResponse={cartConfirmResponse}
+            ></PaymentPage>
+          )}
       </div>
-    </div>
+    </>
   )
 }
 
