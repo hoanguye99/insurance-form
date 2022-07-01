@@ -20,7 +20,7 @@ export interface GetLatestCartDetailResponse {
   orderId: string
 }
 
-interface CartItemResponse {
+export interface CartItemResponse {
   id: string
   createdDate: string
   productType: string

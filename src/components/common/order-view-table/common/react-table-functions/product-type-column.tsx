@@ -1,9 +1,5 @@
 import { useAppSelector } from 'app/hooks'
-import { selectUserDetail } from 'features/auth/user-login-slice'
 import { selectProductList } from 'features/product/product-list-slice'
-import { InsuranceOrder } from 'models/api'
-import AdminActionButton from '../../admin-main-table/admin-action-button'
-import UserActionButton from '../../user-main-table/user-action-button'
 
 interface ProductTypeColumnProps {
   typeCode: string

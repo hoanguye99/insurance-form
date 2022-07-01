@@ -9,6 +9,10 @@ import { orderCreateReducer } from 'features/order/order-create-slice'
 import { orderGroupCreateReducer } from 'features/order/order-group-create-slice'
 import { orderGroupReducer } from 'features/order/order-group-slice'
 import { orderListReducer } from 'features/order/order-list-slice'
+import { listBankReducer } from 'features/payment/list-bank-slice'
+import { makeOneClickPaymentReducer } from 'features/payment/make-one-click-payment'
+import { makePaymentReducer } from 'features/payment/make-payment-slice'
+import { paymentMethodsReducer } from 'features/payment/payment-methods-slice'
 import { productListReducer } from 'features/product/product-list-slice'
 
 export const store = configureStore({
@@ -28,6 +32,12 @@ export const store = configureStore({
 
     cartGet: cartGetReducer,
     cartConfirm: cartConfirmReducer,
+
+    // payment api
+    listBank: listBankReducer,
+    paymentMethods: paymentMethodsReducer,
+    makePayment: makePaymentReducer,
+    makeOneClickPayment: makeOneClickPaymentReducer,
   },
 })
 

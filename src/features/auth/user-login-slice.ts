@@ -13,6 +13,7 @@ const initialState: LoginState = {
         accessToken: '',
         refreshToken: '',
         email: '',
+        id: '',
         displayName: 'anonymous',
         role: 'ANONYMOUS',
       },
@@ -84,6 +85,7 @@ const userLoginSlice = createSlice({
           status: 'failed',
           userDetail: {
             accessToken: '',
+            id: '',
             refreshToken: '',
             email: '',
             displayName: 'anonymous',
@@ -101,6 +103,7 @@ function handleLogoutAction(state: LoginState) {
   state.userDetail = {
     accessToken: '',
     refreshToken: '',
+    id: '',
     email: '',
     displayName: 'anonymous',
     role: 'ANONYMOUS',

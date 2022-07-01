@@ -2,6 +2,8 @@ import { useAppDispatch } from 'app/hooks'
 import { Footer } from 'components/footer'
 import { getCartAsync } from 'features/cart/cart-get-slice'
 import { getAllOrdersAsync } from 'features/order/order-list-slice'
+import { getListBankAsync } from 'features/payment/list-bank-slice'
+import { getPaymentMethodsAsync } from 'features/payment/payment-methods-slice'
 import { useGetAllProductTypes } from 'hooks/useGetAllProductTypes'
 import { useUserLogout } from 'hooks/useUserLogout'
 import { useEffect, useState } from 'react'
@@ -17,6 +19,8 @@ export const MainLayout = () => {
   useEffect(() => {
     dispatch(getCartAsync())
     dispatch(getAllOrdersAsync())
+    dispatch(getListBankAsync())
+    dispatch(getPaymentMethodsAsync())
   }, [])
   const data = [
     {

@@ -1,4 +1,7 @@
+import { useAppDispatch } from 'app/hooks'
 import { ErrorModal } from 'components/submit/individual'
+import { resetCartConfirm } from 'features/cart/cart-confirm-slice'
+import { useEffect } from 'react'
 import { useCartConfirmState } from './hook'
 import PaymentPage from './payment-page'
 import ReviewPage from './review-page'
@@ -11,6 +14,10 @@ const Cart = () => {
     closeErrorModal,
     failureDescription,
   } = useCartConfirmState()
+  const dispatch = useAppDispatch()
+  useEffect(() => {return () => {
+    dispatch(resetCartConfirm())
+  }}, []);
   return (
     <>
       {showErrorModal && (

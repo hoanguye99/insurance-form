@@ -6,11 +6,13 @@ interface ButtonProps {
   onClick?: () => void
   posting?: boolean
   children: React.ReactNode
+  disabled?: boolean
 }
 
 export const Button = (props: ButtonProps) => {
   return (
     <button
+      disabled={props.disabled}
       type={`${ props.posting ? 'button' : 'submit'}`}
       onClick={props.onClick}
       className={`${props.className} ${

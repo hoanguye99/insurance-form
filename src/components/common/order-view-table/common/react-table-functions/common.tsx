@@ -311,7 +311,7 @@ export const useReviewColumns = () => {
   return columns
 }
 
-interface CartItem {
+export interface CartItem {
   id: string
   typeCode: string
   plate: string

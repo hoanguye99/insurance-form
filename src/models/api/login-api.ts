@@ -1,6 +1,7 @@
 export interface LoginResponse {
   accessToken: string
   refreshToken: string
+  id: string
   displayName: string
   role: "USER" | "ADMIN"
   email: string

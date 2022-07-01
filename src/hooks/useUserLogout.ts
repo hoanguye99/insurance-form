@@ -23,7 +23,6 @@ export const useUserLogoutNoNavigate = () => {
   const dispatch = useAppDispatch()
   function userLogout() {
     dispatch(logout())
-    dispatch(resetProductList())
     dispatch(resetOrderList())
     dispatch(resetOrderCreate())
     dispatch(resetOrderGroup())
