@@ -14,6 +14,7 @@ import ScrollToTop from 'components/common/scroll-to-top'
 import ImageUpload from 'components/submit/image-upload'
 import Cart from 'components/cart'
 import Invoice from 'components/invoice'
+import Confirm from 'components/confirm'
 
 function App() {
   const userDetail = useAppSelector(selectUserDetail)
@@ -49,6 +50,9 @@ function App() {
             </Route>
             <Route path="invoice" element={<MainLayout />}>
               <Route index element={<Invoice />} />
+            </Route>
+            <Route path="confirm" element={<MainLayout />}>
+              <Route index element={<Confirm />} />
             </Route>
             <Route index element={<Login />} />
             <Route

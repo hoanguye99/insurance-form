@@ -33,7 +33,7 @@ export const makePaymentAsync = createAsyncThunk(
         invoiceId: data.invoiceId,
         invoiceCode: data.invoiceCode,
         saveCard: 1,
-        AgainLink: 'http://localhost:3000/confirm/',
+        AgainLink: process.env.REACT_APP_PAYMENT_COMPLETE_REDIRECT_URL || `${window.location.origin.toString()}/confirm/`,
       }
       const response = await paymentApi.makePayment(request)
       return response
