@@ -32,13 +32,17 @@ export const useRefreshToken = () => {
 
   useEffect(() => {
     if (userDetail.accessToken !== '') {
-      var decoded = jwt_decode<AccessTokenDecoded>(userDetail.accessToken)
-      const remainingTime = decoded.exp * 1000 - Date.now() - 3000
-      // const remainingTime = 5000
-      console.log(remainingTime)
-      dispatch(clearTimer())
-      const sessionTimeoutTimer = setTimeout(onSessionTimeout, remainingTime)
-      dispatch(setTimer(sessionTimeoutTimer))
+      try {
+        var decoded = jwt_decode<AccessTokenDecoded>(userDetail.accessToken)
+        const remainingTime = decoded.exp * 1000 - Date.now() - 3000
+        // const remainingTime = 5000
+        console.log(remainingTime)
+        dispatch(clearTimer())
+        const sessionTimeoutTimer = setTimeout(onSessionTimeout, remainingTime)
+        dispatch(setTimer(sessionTimeoutTimer))
+      } catch(error) {
+        onSessionTimeout()
+      }
     }
   }, [userDetail, onSessionTimeout])
 }
